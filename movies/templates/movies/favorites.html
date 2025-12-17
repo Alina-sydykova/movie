@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Мои избранные – KINOTOO</title>
+    <link rel="stylesheet" href="{% static 'movies/css/style.css' %}">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="header-left">
+        <div class="logo">
+            <img src="{% static 'movies/images/icon1.png' %}" alt="icon" class="icon_img">
+            KINOTOO
+        </div>
+    </div>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="{% url 'home' %}" class="active-nav">Фильмы</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main style="padding-top:120px;">
+    <div class="container">
+
+        <div class="header-container">
+            <h2>Мои избранные фильмы</h2>
+        </div>
+
+        <div class="carousel-container">
+            <div class="carousel-viewport">
+                <div class="carousel-track">
+
+                    {% if favorites %}
+                        {% for f in favorites %}
+                            <div class="movie-card">
+
+                                {% if f.poster %}
+                                    <img src="{{ f.poster }}" alt="{{ f.title }}">
+                                {% else %}
+                                    <img src="{% static 'movies/images/1photo.png' %}" alt="{{ f.title }}">
+                                {% endif %}
+
+                                <div class="movie-title">
+                                    {{ f.title }}
+                                    {% if f.year %} ({{ f.year }}){% endif %}
+                                </div>
+
+                                <!-- 🔥 Блок с кнопками -->
+                                <div class="movie-actions">
+
+                                    <!-- Подробнее -->
+                                    <a href="{% url 'movie_detail' f.imdb_id %}"
+                                       class="fav-icon fav-icon-info">
+                                        <i class="fa-solid fa-circle-info"></i>
+                                    </a>
+
+                                    <!-- Сердечко — удалить из избранного -->
+                                    <form method="post"
+                                          action="{% url 'remove_from_favorites' f.imdb_id %}">
+                                        {% csrf_token %}
+                                        <button type="submit"
+                                                class="fav-icon fav-toggle is-favorite">
+                                            <i class="fa-solid fa-heart"></i>
+                                        </button>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="empty">У вас пока нет избранных фильмов.</p>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+</body>
+</html>

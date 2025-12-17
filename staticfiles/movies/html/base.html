@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Kino Catalog{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'movies/css/styles.css' %}">
+</head>
+<body class="page-dark">
+
+<header class="top-nav">
+    <div class="top-nav__left">
+        <a href="{% url 'home' %}" class="logo">
+            <span class="logo__icon">🎬</span>
+            <span class="logo__text">KINOTOO</span>
+        </a>
+
+        <nav class="main-menu">
+            <a href="#" class="main-menu__item main-menu__item--active">Фильмы</a>
+            <a href="#" class="main-menu__item">Сериалы</a>
+            <a href="#" class="main-menu__item">Новости</a>
+            <a href="#" class="main-menu__item">Календарь</a>
+        </nav>
+    </div>
+
+    <div class="top-nav__right">
+        {% if user.is_authenticated %}
+            <span class="user-name">Привет, {{ user.username }}</span>
+            <a href="{% url 'favorites' %}" class="icon-btn">★</a>
+            <a href="{% url 'logout' %}" class="icon-btn">⎋</a>
+        {% else %}
+            <a href="{% url 'login' %}" class="icon-btn">Войти</a>
+        {% endif %}
+    </div>
+</header>
+
+<main class="main-wrapper">
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+    <div class="footer-columns">
+        <div class="footer-col">
+            <h4>О нас</h4>
+            <a href="#">О компании</a>
+            <a href="#">Контакты</a>
+            <a href="#">Пользовательское соглашение</a>
+            <a href="#">Политика конфиденциальности</a>
+        </div>
+        <div class="footer-col">
+            <h4>Помощь</h4>
+            <a href="#">Сообщить об ошибке</a>
+            <a href="#">F.A.Q.</a>
+        </div>
+        <div class="footer-col">
+            <h4>Социальные сети</h4>
+            <a href="#">Instagram</a>
+            <a href="#">VK</a>
+            <a href="#">Telegram</a>
+        </div>
+        <div class="footer-col">
+            <h4>Скачать приложение</h4>
+            <div class="store-buttons">
+                <div class="store-btn">Google Play</div>
+                <div class="store-btn">App Store</div>
+            </div>
+        </div>
+    </div>
+    <p class="footer-copy">© 2025 ООО «KinoToo»</p>
+</footer>
+
+<script src="{% static 'movies/js/main.js' %}"></script>
+</body>
+</html>

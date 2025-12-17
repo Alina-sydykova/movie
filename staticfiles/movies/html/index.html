@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Kino Catalog – Главная{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero__background">
+        <!-- можешь заменить на свой постер через inline-style или CSS -->
+        <img src="https://via.placeholder.com/1400x400/111111/ffffff?text=Stranger+Things" alt="Banner">
+    </div>
+
+    <div class="hero__overlay"></div>
+
+    <div class="hero__content">
+        <div class="hero__meta">
+            <span>2025</span>
+            <span>16+</span>
+            <span>Сериал</span>
+            <span>Драма</span>
+            <span>Ужасы</span>
+            <span>Научная фантастика</span>
+        </div>
+        <h1 class="hero__title">Очень странные дела</h1>
+        <h2 class="hero__subtitle">Stranger Things</h2>
+        <p class="hero__description">
+            Когда исчезает мальчик, жители небольшого городка узнают секреты, связанные с тайными экспериментами, 
+            ужасающими сверхъестественными силами и странной маленькой девочкой.
+        </p>
+
+        <div class="hero__buttons">
+            <a href="#" class="btn-primary">Смотреть</a>
+            <a href="#now" class="btn-secondary">Подробнее</a>
+        </div>
+
+        <!-- Поиск поверх баннера -->
+        <form id="search-form" class="hero-search">
+            {% csrf_token %}
+            <input
+                type="text"
+                id="search-input"
+                name="q"
+                placeholder="Поиск фильмов..."
+                value="{{ query|default:'' }}"
+            >
+            <button type="submit">Найти</button>
+        </form>
+    </div>
+</section>
+
+<section class="section" id="now">
+    <div class="section__header">
+        <h2>Сейчас смотрят</h2>
+        <span class="section__arrow">›</span>
+    </div>
+    <div id="movies-container" class="carousel">
+        {# JS нарисует сюда поиск. На всякий случай выведем серверный вариант, если есть. #}
+        {% if movies %}
+            {% for m in movies %}
+                <div class="movie-card">
+                    {% if m.Poster and m.Poster != "N/A" %}
+                        <img src="{{ m.Poster }}" alt="{{ m.Title }}" class="movie-card__poster">
+                    {% else %}
+                        <div class="movie-card__poster movie-card__poster--placeholder">No image</div>
+                    {% endif %}
+                    <div class="movie-card__rating">7.9</div>
+                    <p class="movie-card__title">{{ m.Title }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="section__header">
+        <h2>Жанры</h2>
+    </div>
+
+    <div class="genres-row">
+        <div class="genre-card">
+            <p>Комедии</p>
+        </div>
+        <div class="genre-card">
+            <p>Драмы</p>
+        </div>
+        <div class="genre-card">
+            <p>Ужасы</p>
+        </div>
+        <div class="genre-card">
+            <p>Мультфильмы</p>
+        </div>
+        <div class="genre-card">
+            <p>Фантастика</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section__header">
+        <h2>Скоро</h2>
+        <span class="section__arrow">›</span>
+    </div>
+    <div class="carousel">
+        <!-- заглушки, можешь потом заменить на реальные данные -->
+        <div class="soon-card">
+            <p class="soon-card__date">5 декабря</p>
+        </div>
+        <div class="soon-card">
+            <p class="soon-card__date">4 декабря</p>
+        </div>
+        <div class="soon-card">
+            <p class="soon-card__date">4 декабря</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section__header">
+        <h2>Kinokids</h2>
+    </div>
+    <div class="carousel">
+        <div class="kids-card">Шурик и Шайк</div>
+        <div class="kids-card">Чемпионы</div>
+        <div class="kids-card">Настя и Вася</div>
+    </div>
+</section>
+
+{% endblock %}

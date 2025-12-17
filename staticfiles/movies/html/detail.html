@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}{{ movie.Title }} – Kino Catalog{% endblock %}
+
+{% block content %}
+<section class="section movie-detail">
+    <div class="movie-detail__layout">
+        <div class="movie-detail__poster-wrap">
+            {% if movie.Poster and movie.Poster != "N/A" %}
+                <img src="{{ movie.Poster }}" alt="{{ movie.Title }}" class="movie-detail__poster">
+            {% else %}
+                <div class="movie-detail__poster movie-detail__poster--placeholder">
+                    Нет постера
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="movie-detail__info">
+            <div class="movie-detail__meta-row">
+                <span class="tag-pill">{{ movie.Year }}</span>
+                {% if movie.Rated %}
+                    <span class="tag-pill">{{ movie.Rated }}</span>
+                {% endif %}
+                {% if movie.Runtime %}
+                    <span class="tag-pill">{{ movie.Runtime }}</span>
+                {% endif %}
+            </div>
+
+            <h1 class="movie-detail__title">{{ movie.Title }}</h1>
+
+            {% if movie.Genre %}
+                <p class="movie-detail__genres">{{ movie.Genre }}</p>
+            {% endif %}
+
+            <div class="movie-detail__rating-row">
+                {% if movie.imdbRating %}
+                    <span class="rating-badge">IMDb {{ movie.imdbRating }}</span>
+                {% endif %}
+                {% if movie.imdbVotes %}
+                    <span class="rating-votes">{{ movie.imdbVotes }} голосов</span>
+                {% endif %}
+            </div>
+
+            <div class="movie-detail__text">
+                {% if movie.Plot %}
+                    <h3>Описание</h3>
+                    <p>{{ movie.Plot }}</p>
+                {% endif %}
+
+                <div class="movie-detail__credits">
+                    {% if movie.Director %}
+                        <p><span>Режиссёр:</span> {{ movie.Director }}</p>
+                    {% endif %}
+                    {% if movie.Actors %}
+                        <p><span>В ролях:</span> {{ movie.Actors }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="movie-detail__actions">
+                {% if user.is_authenticated %}
+                    <a class="btn-primary" href="{% url 'add_fav' movie.imdbID %}">
+                        ★ В избранное
+                    </a>
+                {% else %}
+                    <a class="btn-primary" href="{% url 'login' %}?next={% url 'detail' movie.imdbID %}">
+                        Войти, чтобы добавить в избранное
+                    </a>
+                {% endif %}
+                <a class="btn-secondary" href="{% url 'home' %}">
+                    ← Назад на главную
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
