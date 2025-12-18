@@ -259,8 +259,38 @@ ul {
 }
 
 .list-viewport {
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(179, 202, 255, 0.55) transparent;
+    cursor: grab;
     width: 100%;
+}
+
+.list-viewport::-webkit-scrollbar {
+    height: 8px;
+}
+
+.list-viewport::-webkit-scrollbar-thumb {
+    background: rgba(179, 202, 255, 0.45);
+    border-radius: 999px;
+}
+
+.list-viewport::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.list-viewport:active {
+    cursor: grabbing;
+}
+
+.list-viewport.is-dragging {
+    cursor: grabbing;
+    user-select: none;
 }
 
 .list-viewport .carousel-track {
@@ -273,6 +303,7 @@ ul {
 .list-viewport .movie-card {
     flex: 0 0 250px;
     max-width: 250px;
+    scroll-snap-align: start;
 }
 
 .list-nav {
@@ -284,6 +315,9 @@ ul {
     color: rgba(229, 236, 255, 0.95);
     cursor: pointer;
     transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease, opacity 0.22s ease;
+    position: relative;
+    z-index: 50;
+    pointer-events: auto;
 }
 
 .list-nav:hover:not(:disabled) {

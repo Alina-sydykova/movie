@@ -56,7 +56,7 @@
 
     {% if favorites %}
         <div class="list-carousel">
-            <button class="list-nav prev-button" id="prevButton_favorites" disabled>
+            <button type="button" class="list-nav prev-button" id="prevButton_favorites" disabled>
                 <span class="arrow">&#9664;</span>
             </button>
 
@@ -93,7 +93,7 @@
                 </div>
             </div>
 
-            <button class="list-nav next-button" id="nextButton_favorites">
+            <button type="button" class="list-nav next-button" id="nextButton_favorites">
                 <span class="arrow">&#9654;</span>
             </button>
         </div>
@@ -192,6 +192,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-<script src="{% static 'script.js' %}"></script>
+<script src="{% static 'script.js' %}?v=2"></script>
 </body>
 </html>

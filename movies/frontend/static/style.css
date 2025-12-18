@@ -321,7 +321,41 @@ span {
 }
 
 .carousel-viewport {
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(179, 202, 255, 0.55) transparent;
+    cursor: grab;
+}
+
+.carousel-viewport::-webkit-scrollbar {
+    height: 8px;
+}
+
+.carousel-viewport::-webkit-scrollbar-thumb {
+    background: rgba(179, 202, 255, 0.45);
+    border-radius: 999px;
+}
+
+.carousel-viewport::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.carousel-viewport:active {
+    cursor: grabbing;
+}
+
+.carousel-viewport.is-dragging {
+    cursor: grabbing;
+    user-select: none;
+}
+
+.carousel-viewport .movie-card {
+    scroll-snap-align: start;
 }
 
 .carousel-track {
@@ -396,13 +430,14 @@ span {
     color: white;
     border: none;
     cursor: pointer;
-    z-index: 10;
+    z-index: 1000;
     opacity: 0.8;
     transition: opacity 0.2s, background-color 0.2s;
     border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
+    pointer-events: auto;
 }
 
 .nav-button:hover:not(:disabled) {
@@ -659,7 +694,7 @@ span {
         padding: 0 10px;
     }
 
-    .carousel-viewport { overflow: hidden; }
+    .carousel-viewport { overflow-x: auto; overflow-y: hidden; }
 .carousel-track { display: flex; transition: transform .3s ease; }
 .movie-card { flex: 0 0 auto; }
 

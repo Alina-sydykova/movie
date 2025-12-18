@@ -52,7 +52,7 @@
 
     {% if entries %}
         <div class="list-carousel">
-            <button class="list-nav prev-button" id="prevButton_watchlater" disabled>
+            <button type="button" class="list-nav prev-button" id="prevButton_watchlater" disabled>
                 <span class="arrow">&#9664;</span>
             </button>
 
@@ -81,7 +81,7 @@
                 </div>
             </div>
 
-            <button class="list-nav next-button" id="nextButton_watchlater">
+            <button type="button" class="list-nav next-button" id="nextButton_watchlater">
                 <span class="arrow">&#9654;</span>
             </button>
         </div>
@@ -183,6 +183,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-<script src="{% static 'script.js' %}"></script>
+<script src="{% static 'script.js' %}?v=2"></script>
 </body>
 </html>

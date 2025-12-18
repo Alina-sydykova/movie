@@ -85,62 +85,147 @@ function initCarousel(trackId, prevBtnId, nextBtnId, cardClass, slidesPerView) {
   if (!slides.length) return;
 
   const viewport = track.closest(".carousel-viewport");
-  let currentIndex = 0;
+  if (!viewport) return;
+
+  // На всякий случай сбрасываем старые transform-сдвиги, если они остались от прошлой логики
+  track.style.transform = "";
 
   const getStepPx = () => {
     const slide = slides[0];
     const styles = window.getComputedStyle(slide);
     const marginL = parseFloat(styles.marginLeft) || 0;
     const marginR = parseFloat(styles.marginRight) || 0;
-    return slide.getBoundingClientRect().width + marginL + marginR;
+    const trackStyles = window.getComputedStyle(track);
+    const gap =
+      parseFloat(trackStyles.columnGap) ||
+      parseFloat(trackStyles.gap) ||
+      parseFloat(trackStyles.rowGap) ||
+      0;
+    return slide.getBoundingClientRect().width + marginL + marginR + gap;
   };
 
-  const getVisibleCount = () => {
-    if (slidesPerView) return Math.max(1, Math.ceil(slidesPerView));
-    if (!viewport) return 1;
-    const step = getStepPx() || 1;
-    const w = viewport.getBoundingClientRect().width || step;
-    return Math.max(1, Math.floor(w / step));
-  };
-
-  const maxIndex = () => Math.max(0, slides.length - getVisibleCount());
+  const maxScrollLeft = () => Math.max(0, viewport.scrollWidth - viewport.clientWidth);
 
   const updateButtons = () => {
-    prevButton.disabled = currentIndex <= 0;
-    nextButton.disabled = currentIndex >= maxIndex();
+    const x = viewport.scrollLeft;
+    const max = maxScrollLeft();
+    prevButton.disabled = x <= 0;
+    nextButton.disabled = x >= max - 1;
   };
 
-  const move = (behavior = "smooth") => {
+  const scrollToLeft = (left, behavior = "smooth") => {
+    const max = maxScrollLeft();
+    const clamped = Math.max(0, Math.min(left, max));
+    if (typeof viewport.scrollTo === "function") {
+      try {
+        viewport.scrollTo({ left: clamped, behavior });
+        return;
+      } catch (_) {
+        // fallthrough
+      }
+    }
+    viewport.scrollLeft = clamped;
+  };
+
+  const scrollByStep = (direction) => {
     const step = getStepPx();
-    const max = maxIndex();
-    if (currentIndex > max) currentIndex = max;
-    if (currentIndex < 0) currentIndex = 0;
-
-    const offset = currentIndex * step;
-    track.style.transition = behavior === "smooth" ? "" : "none";
-    track.style.transform = `translateX(${-offset}px)`;
-    if (behavior !== "smooth") requestAnimationFrame(() => (track.style.transition = ""));
-
-    updateButtons();
+    const fallback = Math.max(1, Math.floor(viewport.clientWidth * 0.9));
+    const delta = (step && Number.isFinite(step) ? step : fallback) * direction;
+    scrollToLeft(viewport.scrollLeft + delta, "smooth");
   };
 
-  nextButton.addEventListener("click", () => {
-    if (currentIndex < maxIndex()) {
-      currentIndex += 1;
-      move();
+  nextButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    scrollByStep(1);
+  });
+
+  prevButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    scrollByStep(-1);
+  });
+
+  // UX fallback/enhancement:
+  // - Scroll with mouse wheel (vertical wheel -> horizontal)
+  // - Drag with mouse/touch
+  viewport.addEventListener(
+    "wheel",
+    (e) => {
+      // If user already scrolls horizontally (trackpad), don't interfere
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      if (maxScrollLeft() <= 0) return;
+
+      scrollToLeft(viewport.scrollLeft + e.deltaY, "auto");
+      e.preventDefault();
+    },
+    { passive: false }
+  );
+
+  const DRAG_THRESHOLD_PX = 5;
+  let isPointerDown = false;
+  let startX = 0;
+  let startScrollLeft = 0;
+  let suppressClick = false;
+
+  const endDrag = (pointerId) => {
+    if (!isPointerDown) return;
+    isPointerDown = false;
+    viewport.classList.remove("is-dragging");
+    if (typeof pointerId === "number" && viewport.releasePointerCapture) {
+      try {
+        viewport.releasePointerCapture(pointerId);
+      } catch (_) {}
+    }
+    updateButtons();
+    if (suppressClick) {
+      setTimeout(() => {
+        suppressClick = false;
+      }, 0);
+    }
+  };
+
+  viewport.addEventListener("pointerdown", (e) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    isPointerDown = true;
+    suppressClick = false;
+    startX = e.clientX;
+    startScrollLeft = viewport.scrollLeft;
+    viewport.classList.add("is-dragging");
+    if (viewport.setPointerCapture) {
+      try {
+        viewport.setPointerCapture(e.pointerId);
+      } catch (_) {}
     }
   });
 
-  prevButton.addEventListener("click", () => {
-    if (currentIndex > 0) {
-      currentIndex -= 1;
-      move();
-    }
+  viewport.addEventListener("pointermove", (e) => {
+    if (!isPointerDown) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > DRAG_THRESHOLD_PX) suppressClick = true;
+    viewport.scrollLeft = startScrollLeft - dx;
   });
 
-  window.addEventListener("resize", () => move("instant"));
+  viewport.addEventListener("pointerup", (e) => endDrag(e.pointerId));
+  viewport.addEventListener("pointercancel", (e) => endDrag(e.pointerId));
 
-  move("instant");
+  // Prevent accidental navigation when a drag just happened
+  viewport.addEventListener(
+    "click",
+    (e) => {
+      if (!suppressClick) return;
+      e.preventDefault();
+      e.stopPropagation();
+    },
+    true
+  );
+
+  viewport.addEventListener("scroll", updateButtons, { passive: true });
+  window.addEventListener("resize", updateButtons);
+  window.addEventListener("load", updateButtons);
+
+  // Инициализация
+  updateButtons();
+  requestAnimationFrame(updateButtons);
+  setTimeout(updateButtons, 250);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
