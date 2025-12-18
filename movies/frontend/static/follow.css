@@ -369,6 +369,17 @@ ul {
     gap: 20px;
 }
 
+/* Разводим варианты подписки внутри формы, чтобы карточки не "слипались" */
+.subscription-wrapper form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.subscription-wrapper form .pay-button {
+    margin-top: 0;
+}
+
 .section-title {
     color: white;
     font-size: 2.2em;

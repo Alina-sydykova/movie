@@ -165,16 +165,20 @@ function initCarousel(trackId, prevBtnId, nextBtnId, cardClass, slidesPerView) {
   let startX = 0;
   let startScrollLeft = 0;
   let suppressClick = false;
+  let activePointerId = null;
+  let didSetPointerCapture = false;
 
-  const endDrag = (pointerId) => {
+  const endDrag = () => {
     if (!isPointerDown) return;
     isPointerDown = false;
     viewport.classList.remove("is-dragging");
-    if (typeof pointerId === "number" && viewport.releasePointerCapture) {
+    if (didSetPointerCapture && typeof activePointerId === "number" && viewport.releasePointerCapture) {
       try {
-        viewport.releasePointerCapture(pointerId);
+        viewport.releasePointerCapture(activePointerId);
       } catch (_) {}
     }
+    activePointerId = null;
+    didSetPointerCapture = false;
     updateButtons();
     if (suppressClick) {
       setTimeout(() => {
@@ -184,28 +188,39 @@ function initCarousel(trackId, prevBtnId, nextBtnId, cardClass, slidesPerView) {
   };
 
   viewport.addEventListener("pointerdown", (e) => {
-    if (e.pointerType === "mouse" && e.button !== 0) return;
-    isPointerDown = true;
+    // Если до этого был drag, сбрасываем блокировку клика
     suppressClick = false;
+
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+
+    // Не начинаем drag, если пользователь кликает по кнопкам внутри карусели (например, "удалить")
+    if (e.target.closest("button, input, textarea, select, label")) return;
+
+    isPointerDown = true;
+    activePointerId = e.pointerId;
+    didSetPointerCapture = false;
     startX = e.clientX;
     startScrollLeft = viewport.scrollLeft;
     viewport.classList.add("is-dragging");
-    if (viewport.setPointerCapture) {
-      try {
-        viewport.setPointerCapture(e.pointerId);
-      } catch (_) {}
-    }
   });
 
   viewport.addEventListener("pointermove", (e) => {
     if (!isPointerDown) return;
     const dx = e.clientX - startX;
-    if (Math.abs(dx) > DRAG_THRESHOLD_PX) suppressClick = true;
+    if (Math.abs(dx) > DRAG_THRESHOLD_PX) {
+      suppressClick = true;
+      if (!didSetPointerCapture && viewport.setPointerCapture) {
+        try {
+          viewport.setPointerCapture(activePointerId);
+          didSetPointerCapture = true;
+        } catch (_) {}
+      }
+    }
     viewport.scrollLeft = startScrollLeft - dx;
   });
 
-  viewport.addEventListener("pointerup", (e) => endDrag(e.pointerId));
-  viewport.addEventListener("pointercancel", (e) => endDrag(e.pointerId));
+  viewport.addEventListener("pointerup", () => endDrag());
+  viewport.addEventListener("pointercancel", () => endDrag());
 
   // Prevent accidental navigation when a drag just happened
   viewport.addEventListener(

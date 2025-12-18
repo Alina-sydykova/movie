@@ -147,13 +147,30 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+    const getCookie = (name) => {
+        const cookies = document.cookie ? document.cookie.split(";") : [];
+        for (const cookie of cookies) {
+            const trimmed = cookie.trim();
+            if (trimmed.startsWith(`${name}=`)) {
+                return decodeURIComponent(trimmed.substring(name.length + 1));
+            }
+        }
+        return null;
+    };
+
+    const getCsrfToken = () => {
+        const hiddenToken = document.querySelector('#csrf-form input[name="csrfmiddlewaretoken"]');
+        if (hiddenToken && hiddenToken.value) return hiddenToken.value;
+        return getCookie("csrftoken");
+    };
+
     document.querySelectorAll(".remove-favorite-btn").forEach(btn => {
         btn.addEventListener("click", (e) => {
             e.preventDefault();
             e.stopPropagation();
 
-            const hiddenToken = document.querySelector('#csrf-form input[name="csrfmiddlewaretoken"]');
-            const csrfToken = hiddenToken ? hiddenToken.value : "";
+            const csrfToken = getCsrfToken();
+            if (!csrfToken) return;
 
             fetch("{% url 'toggle_watch_later' %}", {
                 method: "POST",
@@ -183,6 +200,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-<script src="{% static 'script.js' %}?v=2"></script>
+<script src="{% static 'script.js' %}?v=4"></script>
 </body>
 </html>
