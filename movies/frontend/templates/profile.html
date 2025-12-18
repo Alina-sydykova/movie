@@ -1,0 +1,213 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINOTOO</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arsenal+SC:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- было user.css -->
+    <link rel="stylesheet" href="{% static 'user.css' %}">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="header-left">
+        <div class="logo">
+            <img src="{% static 'images/icon1.png' %}" alt="icon" class="icon_img">
+            KINOTOO
+        </div>
+
+        <div class="search-box">
+            <button class="search-icon">
+                <a href="{% url 'home' %}">
+                    <i class="fas fa-search"></i>
+                </a>
+            </button>
+        </div>
+    </div>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="{% url 'home' %}" class="active-nav">Фильмы</a></li>
+            <li><a href="{% url 'series' %}">Сериалы</a></li>
+            <li><a href="{% url 'news' %}">Новости</a></li>
+            <li><a href="{% url 'calendar' %}">Календарь</a></li>
+        </ul>
+    </nav>
+
+    <div class="header-right">
+        <a href="{% url 'push' %}"><i class="fas fa-bell icon"></i></a>
+
+        <a href="{% url 'profile' %}"><i class="fas fa-user-circle icon"></i></a>
+        <a href="{% url 'favorites' %}"><i class="fas fa-bookmark icon"></i></a>
+    </div>
+</header>
+
+<main class="main-content">
+    <div class="profile-container">
+        {% if messages %}
+            <div class="message-stack">
+                {% for message in messages %}
+                    <div class="message-item">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <aside class="profile-sidebar">
+            <button class="nav-button active">Профиль</button>
+
+            <a href="{% url 'mylist' %}">
+                <button class="nav-button">Мои списки</button>
+            </a>
+
+            <a href="{% url 'subscription' %}">
+                <button class="nav-button">Подписка</button>
+            </a>
+
+            <button class="nav-button">F.A.Q</button>
+        </aside>
+
+        <div class="profile-content">
+            <div class="user-avatar-section">
+                {% if profile_obj.avatar %}
+                    <img src="{{ profile_obj.avatar.url }}" alt="Аватар пользователя" class="user-avatar" id="avatarPreview">
+                {% else %}
+                    <img src="{% static 'images/sasha.jpg' %}" alt="Аватар пользователя" class="user-avatar" id="avatarPreview">
+                {% endif %}
+                <label class="avatar-upload">
+                    <input type="file" name="avatar" accept="image/*" form="profile-form" id="avatarInput">
+                    <span><i class="fas fa-camera"></i> Изменить фото</span>
+                </label>
+                <h2 class="user-name">
+                    {{ request.user.first_name|default:request.user.username }}
+                    {{ request.user.last_name }}
+                </h2>
+
+                <nav class="profile-sub-nav">
+                    <button class="sub-nav-button active">Персональная информация</button>
+                    <a href="{% url 'password_change' %}" class="sub-nav-button">Логин и пароль</a>
+                    <form method="post" action="{% url 'logout' %}" class="logout-form">
+                        {% csrf_token %}
+                        <button type="submit" class="sub-nav-button logout-button">Выйти</button>
+                    </form>
+                </nav>
+            </div>
+
+            <form class="personal-info-form" id="profile-form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h3 class="form-title">ПЕРСОНАЛЬНАЯ ИНФОРМАЦИЯ</h3>
+
+                <div class="form-row">
+                    <label class="form-label">Пол</label>
+                    <div class="gender-selection">
+                        <label class="gender-button{% if profile_form.instance.gender == 'M' %} active{% endif %}">
+                            <input type="radio" name="gender" value="M" {% if profile_form.instance.gender == 'M' %}checked{% endif %}>
+                            М
+                        </label>
+                        <label class="gender-button{% if profile_form.instance.gender == 'F' %} active{% endif %}">
+                            <input type="radio" name="gender" value="F" {% if profile_form.instance.gender == 'F' %}checked{% endif %}>
+                            Ж
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row split-row">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Имя</label>
+                        <input type="text" id="name" name="first_name" value="{{ request.user.first_name }}" class="text-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="surname" class="form-label">Фамилия</label>
+                        <input type="text" id="surname" name="last_name" value="{{ request.user.last_name }}" class="text-input">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label for="email" class="form-label">ЭЛ.ПОЧТА</label>
+                    <input type="email" id="email" name="email" value="{{ request.user.email }}" class="text-input">
+                </div>
+
+                <div class="form-row">
+                    <label for="phone" class="form-label">НОМЕР ТЕЛЕФОНА</label>
+                    <div class="phone-input-group">
+                        <span class="country-code">🇰🇬 +996</span>
+                        <input type="tel" id="phone" name="phone" value="{{ profile_form.instance.phone }}" class="text-input">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label for="dob" class="form-label">ДАТА РОЖДЕНИЯ</label>
+                    <input type="date" id="dob" name="birth_date" value="{{ profile_form.instance.birth_date|date:'Y-m-d' }}" class="text-input">
+                </div>
+
+                <div class="form-actions">
+                    <button type="reset" class="action-button cancel">ОТМЕНИТЬ ИЗМЕНЕНИЯ</button>
+                    <button type="submit" class="action-button save">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-content-wrapper">
+        <div class="footer-column about-us">
+            <h3>О нас</h3>
+            <ul>
+                <li>О компании</li>
+                <li>Контакты</li>
+                <li>Новости</li>
+                <li>Пользовательское соглашение</li>
+                <li>Политика конфиденциальности</li>
+            </ul>
+        </div>
+
+        <div class="footer-column help">
+            <h3>Помощь</h3>
+            <ul>
+                <li>Сообщить об ошибке</li>
+                <li>F.A.Q.</li>
+            </ul>
+        </div>
+
+        <div class="footer-column social">
+            <h3>Социальные сети</h3>
+            <ul>
+                <li>Instagram</li>
+                <li>VK</li>
+                <li>Telegram</li>
+            </ul>
+        </div>
+
+        <div class="footer-column app-download">
+            <h3>Скачать приложение</h3>
+            <div class="app-buttons">
+                <a href="#" class="app-button">
+                    <img src="{% static 'images/footrer_icon.png' %}" alt="Google Play">
+                </a>
+                <a href="#" class="app-button">
+                    <img src="{% static 'images/footer_icon2.png' %}" alt="App Store">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <hr class="footer-divider">
+        <p class="copyright">
+            <span class="copyright-icon">©</span> 2015 ООО "КиноТоо"
+        </p>
+    </div>
+</footer>
+
+<!-- было user.js -->
+<script src="{% static 'user.js' %}"></script>
+</body>
+</html>

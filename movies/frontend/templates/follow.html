@@ -1,0 +1,163 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINOTOO</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arsenal+SC:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- было follow.css -->
+    <link rel="stylesheet" href="{% static 'follow.css' %}">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="header-left">
+        <div class="logo">
+            <img src="{% static 'images/icon1.png' %}" alt="icon" class="icon_img">
+            KINOTOO
+        </div>
+
+        <div class="search-box">
+            <button class="search-icon">
+                <a href="{% url 'home' %}">
+                    <i class="fas fa-search"></i>
+                </a>
+            </button>
+        </div>
+    </div>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="{% url 'home' %}" class="active-nav">Фильмы</a></li>
+            <li><a href="{% url 'series' %}">Сериалы</a></li>
+            <li><a href="{% url 'news' %}">Новости</a></li>
+            <li><a href="{% url 'calendar' %}">Календарь</a></li>
+        </ul>
+    </nav>
+
+    <div class="header-right">
+        <a href="{% url 'push' %}"><i class="fas fa-bell icon"></i></a>
+
+        <a href="{% url 'profile' %}"><i class="fas fa-user-circle icon"></i></a>
+        <a href="{% url 'favorites' %}"><i class="fas fa-bookmark icon"></i></a>
+    </div>
+</header>
+
+<main class="main-content">
+    <div class="profile-container">
+
+        <aside class="profile-sidebar">
+            <button class="nav-button">Профиль</button>
+            <a href="{% url 'favorites' %}">
+                <button class="nav-button">Мои списки</button>
+            </a>
+            <a href="{% url 'profile' %}">
+                <button class="nav-button active">Подписка</button>
+            </a>
+            <button class="nav-button">F.A.Q</button>
+        </aside>
+
+        <div class="profile-content">
+            <div class="subscription-wrapper">
+                <h2 class="section-title">Выберите план подписки</h2>
+
+                <input type="radio" id="subOption1" name="subscription" value="1month" checked>
+                <label for="subOption1" class="subscription-card">
+                    <div class="subscription-info">
+                        <div class="duration-group">
+                            <p class="duration-title">1 МЕСЯЦ</p>
+                            <p class="duration-description">
+                                30 дней будут доступны все фильмы и сериалы [ВОЗВРАТА НЕТ]
+                            </p>
+                        </div>
+                        <p class="price">300 KGS</p>
+                    </div>
+                    <div class="custom-radio">
+                        <div class="custom-radio-inner"></div>
+                    </div>
+                </label>
+
+                <input type="radio" id="subOption2" name="subscription" value="3months">
+                <label for="subOption2" class="subscription-card">
+                    <div class="subscription-info">
+                        <div class="duration-group">
+                            <p class="duration-title">3 МЕСЯЦА</p>
+                            <p class="duration-description">
+                                365 дней будут доступны все фильмы и сериалы [ВОЗВРАТА НЕТ]
+                            </p>
+                        </div>
+                        <p class="price">3000 KGS</p>
+                    </div>
+                    <div class="custom-radio">
+                        <div class="custom-radio-inner"></div>
+                    </div>
+                </label>
+
+                <button class="pay-button">Оплатить выбранный план</button>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-content-wrapper">
+        <div class="footer-column about-us">
+            <h3>О нас</h3>
+            <ul>
+                <li>О компании</li>
+                <li>Контакты</li>
+                <li>Новости</li>
+                <li>Пользовательское соглашение</li>
+                <li>Политика конфиденциальности</li>
+            </ul>
+        </div>
+
+        <div class="footer-column help">
+            <h3>Помощь</h3>
+            <ul>
+                <li>Сообщить об ошибке</li>
+                <li>F.A.Q.</li>
+            </ul>
+        </div>
+
+        <div class="footer-column social">
+            <h3>Социальные сети</h3>
+            <ul>
+                <li>Instagram</li>
+                <li>VK</li>
+                <li>Telegram</li>
+            </ul>
+        </div>
+
+        <div class="footer-column app-download">
+            <h3>Скачать приложение</h3>
+            <div class="app-buttons">
+                <a href="#" class="app-button">
+                    <img src="{% static 'images/footrer_icon.png' %}" alt="Google Play">
+                </a>
+                <a href="#" class="app-button">
+                    <img src="{% static 'images/footer_icon2.png' %}" alt="App Store">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <hr class="footer-divider">
+        <p class="copyright">
+            <span class="copyright-icon">©</span> 2015 ООО "КиноТоо"
+        </p>
+    </div>
+</footer>
+
+<!-- было user.js -->
+<script src="{% static 'user.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINOTOO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arsenal+SC:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- было push.css -->
+    <link rel="stylesheet" href="{% static 'push.css' %}">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="header-left">
+        <div class="logo">
+            <img src="{% static 'images/icon1.png' %}" alt="icon" class="icon_img">KINOTOO
+        </div>
+
+        <div class="search-box">
+            <button class="search-icon">
+                <a href="{% url 'home' %}">
+                    <i class="fas fa-search"></i>
+                </a>
+            </button>
+        </div>
+    </div>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="{% url 'home' %}" class="active-nav">Фильмы</a></li>
+            <li><a href="{% url 'series' %}">Сериалы</a></li>
+            <li><a href="{% url 'news' %}">Новости</a></li>
+            <li><a href="{% url 'calendar' %}">Календарь</a></li>
+        </ul>
+    </nav>
+
+    <div class="header-right">
+        <!-- текущая страница -->
+        <a href="{% url 'push' %}"><i class="fas fa-bell icon"></i></a>
+        <a href="{% url 'profile' %}"><i class="fas fa-user-circle icon"></i></a>
+        <a href="{% url 'favorites' %}"><i class="fas fa-bookmark icon"></i></a>
+    </div>
+</header>
+
+<div class="notifications-container">
+    <main class="main-content">
+        <h1 class="page-title">Уведомления</h1>
+
+        <div class="notification-card">
+            <div class="card-media">
+                <img src="{% static 'images/push.png' %}" alt="Обложка сериала Очень странные дела 5">
+            </div>
+            <div class="card-content">
+                <p class="card-text">
+                    Вышла 5ая серия сериала “Очень странные дела 5”, который находиться в списке “Избранные”
+                </p>
+                <div class="card-footer">
+                    <span class="card-date">23.12.2025 23:59</span>
+                    <div class="card-actions">
+                        <button class="action-btn watch-btn">
+                            Смотреть <span class="icon">▶</span>
+                        </button>
+                        <button class="action-btn details-btn">
+                            Подробнее <span class="icon">ⓘ</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="notification-card">
+            <div class="card-media">
+                <img src="{% static 'images/serial2.jpg' %}" alt="Обложка сериала Очень странные дела 5">
+            </div>
+            <div class="card-content">
+                <p class="card-text">
+                    Вышла 5ая серия сериала “Ход королевы”, который находиться в списке “Избранные”
+                </p>
+                <div class="card-footer">
+                    <span class="card-date">23.12.2025 23:59</span>
+                    <div class="card-actions">
+                        <button class="action-btn watch-btn">
+                            Смотреть <span class="icon">▶</span>
+                        </button>
+                        <button class="action-btn details-btn">
+                            Подробнее <span class="icon">ⓘ</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="notification-card">
+            <div class="card-media">
+                <img src="{% static 'images/serial8.jpg' %}" alt="Обложка сериала Очень странные дела 5">
+            </div>
+            <div class="card-content">
+                <p class="card-text">
+                    Вышла 5ая серия сериала “Гравити фолз”, который находиться в списке “Избранные”
+                </p>
+                <div class="card-footer">
+                    <span class="card-date">23.12.2025 23:59</span>
+                    <div class="card-actions">
+                        <button class="action-btn watch-btn">
+                            Смотреть <span class="icon">▶</span>
+                        </button>
+                        <button class="action-btn details-btn">
+                            Подробнее <span class="icon">ⓘ</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="notification-card">
+            <div class="card-media">
+                <img src="{% static 'images/serial3.jpg' %}" alt="Обложка сериала Очень странные дела 5">
+            </div>
+            <div class="card-content">
+                <p class="card-text">
+                    Вышла 5ая серия сериала “Люцифер”, который находиться в списке “Избранные”
+                </p>
+                <div class="card-footer">
+                    <span class="card-date">23.12.2025 23:59</span>
+                    <div class="card-actions">
+                        <button class="action-btn watch-btn">
+                            Смотреть <span class="icon">▶</span>
+                        </button>
+                        <button class="action-btn details-btn">
+                            Подробнее <span class="icon">ⓘ</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="notification-card">
+            <div class="card-media">
+                <img src="{% static 'images/serial5.jpg' %}" alt="Обложка сериала Очень странные дела 5">
+            </div>
+            <div class="card-content">
+                <p class="card-text">
+                    Вышла 5ая серия сериала “Время путешествий”, который находиться в списке “Избранные”
+                </p>
+                <div class="card-footer">
+                    <span class="card-date">23.12.2025 23:59</span>
+                    <div class="card-actions">
+                        <button class="action-btn watch-btn">
+                            Смотреть <span class="icon">▶</span>
+                        </button>
+                        <button class="action-btn details-btn">
+                            Подробнее <span class="icon">ⓘ</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="notification-card">
+            <div class="card-media">
+                <img src="{% static 'images/serial7.jpg' %}" alt="Обложка сериала Очень странные дела 5">
+            </div>
+            <div class="card-content">
+                <p class="card-text">
+                    Вышла 5ая серия сериала “Семейка Крудс, который находиться в списке “Избранные”
+                </p>
+                <div class="card-footer">
+                    <span class="card-date">23.12.2025 23:59</span>
+                    <div class="card-actions">
+                        <button class="action-btn watch-btn">
+                            Смотреть <span class="icon">▶</span>
+                        </button>
+                        <button class="action-btn details-btn">
+                            Подробнее <span class="icon">ⓘ</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<footer class="site-footer">
+    <div class="footer-content-wrapper">
+        <div class="footer-column about-us">
+            <h3>О нас</h3>
+            <ul>
+                <li>О компании</li>
+                <li>Контакты</li>
+                <li>Новости</li>
+                <li>Пользовательское соглашение</li>
+                <li>Политика конфиденциальности</li>
+            </ul>
+        </div>
+        <div class="footer-column help">
+            <h3>Помощь</h3>
+            <ul>
+                <li>Сообщить об ошибке</li>
+                <li>F.A.Q.</li>
+            </ul>
+        </div>
+        <div class="footer-column social">
+            <h3>Социальные сети</h3>
+            <ul>
+                <li>Instagram</li>
+                <li>VK</li>
+                <li>Telegram</li>
+            </ul>
+        </div>
+        <div class="footer-column app-download">
+            <h3>Скачать приложение</h3>
+            <div class="app-buttons">
+                <a href="#" class="app-button">
+                    <img src="{% static 'images/footrer_icon.png' %}" alt="Google Play">
+                </a>
+                <a href="#" class="app-button">
+                    <img src="{% static 'images/footer_icon2.png' %}" alt="App Store">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <hr class="footer-divider">
+        <p class="copyright">
+            <span class="copyright-icon">©</span> 2015 ООО "КиноТоо"
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>

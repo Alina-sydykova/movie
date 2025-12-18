@@ -9,7 +9,7 @@ class FavoriteMovieSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = FavoriteMovie
-        fields = ["id", "imdb_id", "title", "year", "poster_url"]
+        fields = ["id", "imdb_id", "title", "year", "poster"]
 
 
 class MovieShortSerializer(serializers.Serializer):

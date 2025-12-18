@@ -1,0 +1,595 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+
+/* Опционально, но полезно для предотвращения горизонтального скролла */
+html {
+    overflow-x: hidden;
+}
+
+:root {
+    --color-dark-bg: #141416;
+    /* Исходный темно-серый (для шапки) */
+    --color-gradient-start: #1c1c1e;
+    /* Чуть светлее, чем шапка, для начала градиента */
+    --color-gradient-mid: #222c3b;
+    /* Глубокий сине-серый для мягкого перехода */
+    --color-sky-end: #163356;
+    /* Светлый голубовато-белый (Sky Blue-White) */
+    --color-footer-bg: #1c1c1e;
+    /* Цвет фона в футере */
+    /* ... (Остальные переменные) ... */
+}
+
+body {
+    /* ИЗМЕНЕНИЕ: Вертикальный градиент: Темный -> Сине-серый -> Светлый (Sky Blue-White) */
+    background: linear-gradient(to bottom,
+            var(--color-gradient-start) 0%,
+            /* Начинаем с темно-серого */
+            var(--color-gradient-mid) 60%,
+            /* Мягкий, плавный переход через сине-серый */
+            var(--color-sky-end) 100%);
+    color: var(--color-text-light);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+     display: flex;
+     flex-direction: column;
+
+
+
+}
+
+
+
+.arsenal-sc-regular {
+    font-family: "Arsenal SC", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.arsenal-sc-bold {
+    font-family: "Arsenal SC", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.arsenal-sc-regular-italic {
+    font-family: "Arsenal SC", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.arsenal-sc-bold-italic {
+    font-family: "Arsenal SC", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+}
+
+a {
+    color: var(--text-light);
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 1. Стили Шапки (Header) */
+/* CSS-стили для Шапки */
+/* --- ГЛАВНЫЕ ИСПРАВЛЕНИЯ --- */
+
+/* 1. Шапка: Убираем absolute, делаем её фиксированной, чтобы она была ВСЕГДА сверху
+   и не конфликтовала с контентом */
+/* 1. Стили Шапки (Header) - Возвращаем прозрачность через псевдоэлемент */
+.main-header {
+    background-color: transparent;
+    /* Снова делаем сам контейнер прозрачным */
+    position: sticky;
+    /* Оставляем sticky, чтобы не было наложения */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    border-bottom: none;
+}
+
+/* Возвращаем полупрозрачный фон через ::before */
+.main-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Используем ваш оригинальный полупрозрачный фон */
+    background: rgba(31, 35, 43, 0.50);
+    z-index: -1;
+}
+
+/* Убираем ненужное "content: none;" из предыдущего исправления */
+.main-header::before {
+    content: '';
+    /* Важно, чтобы здесь остался контент! */
+}
+
+
+
+/* 2. Контент: Отступ сверху больше не нужен, так как шапка в потоке */
+
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.logo {
+    font-size: 50px;
+    color: rgba(179, 202, 255, 0.74);
+    font-family: "Arsenal SC",
+        sans-serif;
+    font-weight: 700;
+    font-style: italic;
+
+}
+
+.icon_img {
+    width: 90px;
+    height: 60px;
+    margin-right: 15px;
+}
+
+.search-box {
+    border-radius: 50%;
+    width: 50px;
+    /* Немного уменьшим размер */
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    /* Убираем background: url(images/icon_search.png); */
+    background-color: white;
+    /* Делаем фон прозрачным */
+    border: 2px solid #242938;
+    /* Рамка в цвет акцента */
+    opacity: 1;
+    /* Убираем низкую прозрачность */
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Наведение: подсветка при наведении */
+.search-box:hover {
+    background-color: rgba(179, 202, 255, 0.1);
+    /* Легкий фон */
+    border-color: #ffffff;
+    /* Белая рамка */
+}
+
+/* Стилизация самой иконки (кнопки внутри .search-box).
+   Мы хотим, чтобы иконка Font Awesome отображалась.
+*/
+.search-icon {
+    cursor: pointer;
+    /* Иконка будет цветом текста */
+    color: black;
+    border: none;
+    background: none;
+    font-size: 22px;
+    /* Размер иконки */
+    padding: 0;
+    transition: color 0.3s;
+}
+
+/* При наведении на родительский блок, меняем цвет иконки */
+.search-box:hover .search-icon {
+    color: #ffffff;
+}
+
+
+.main-nav ul {
+    display: flex;
+    gap: 50px;
+    font-family: "Arsenal SC",
+        sans-serif;
+    font-weight: 700;
+    font-style: normal;
+
+}
+
+.main-nav a {
+    color: rgba(179, 202, 255, 0.74);
+    font-size: 25px;
+    transition: color 0.3s;
+
+}
+
+.main-nav a:hover,
+.main-nav a.active-nav {
+
+    color: rgba(179, 202, 255, 0.74);
+}
+
+.header-right {
+    display: flex;
+    gap: 35px;
+}
+
+.icon {
+    color: #ffffff;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+
+/* ььь */
+/* Стили для мобильного меню (скрыто на десктопе) */
+.menu-icon {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* ------------------- Основной Контент ------------------- */
+.main-content {
+    padding: 20px 40px;
+    margin-top: 0;
+    /* Убираем старый марджин-топ 10% или 100px */
+    padding-top: 100px;
+    /* Добавляем необходимый отступ с помощью padding,
+                           чтобы контент не прятался под sticky-шапкой */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-grow: 1;
+}
+
+
+
+
+
+
+
+/* Основной контейнер */
+.profile-container {
+    display: flex;
+    width: 100%;
+    /* Было 1050px */
+    max-width: 1050px;
+    /* Ограничиваем ширину, но даем сжиматься */
+    gap: 30px;
+    margin: 0 auto;
+    /* Центрируем контейнер */
+
+}
+
+/* --- Левое меню (САЙДБАР) --- */
+.profile-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 200px;
+}
+
+.nav-button {
+    width: 100%;
+    padding: 20px 30px;
+    border: 1px solid #B3CAFF;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+    background-color: #242938;
+    /* Фон неактивных кнопок */
+    color: #E0E0E0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s;
+}
+
+.nav-button.active {
+    background-color: #A0B2E8;
+    /* Светло-сиреневый для активной кнопки */
+    color: #121212;
+    font-weight: 600;
+}
+
+
+/* --- Правая основная область --- */
+.profile-content {
+    flex-grow: 1;
+    background-color: #242938;
+    /* Фон основной карточки */
+    border-radius: 6%;
+    border: 2px solid #B3CAFF;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    padding: 20px;
+}
+
+
+
+/* Навигация внутри профиля (подменю) */
+.profile-sub-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+
+}
+
+.sub-nav-button {
+    width: 90%;
+    padding: 35px 200px;
+    border: 2px solid #B3CAFF;
+    border-radius: 10px;
+    background-color: #242938;
+    color: #E0E0E0;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    transition: background-color 0.2s;
+    font-family: "Arsenal SC",
+    sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 25px;
+    display: block;
+}
+
+.sub-nav-button:hover {
+    background-color: rgba(85, 154, 194, 0.1);
+     box-shadow: 0 0 15px rgba(160, 178, 232, 0.5);
+     /* Голубое свечение */
+}
+
+.site-footer {
+    background-color: #2e2a39;
+    color: #c7c7c7;
+    padding: 40px 20px 20px;
+    font-family: Arial, sans-serif;
+    margin-top: 50px;
+    font-size: 0.9em;
+}
+
+.footer-content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+
+.footer-column {
+    flex-basis: 20%;
+    margin-right: 30px;
+}
+
+.footer-column h3 {
+    color: white;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column li {
+    margin-bottom: 8px;
+}
+
+.app-download {
+    text-align: right;
+    flex-basis: 30%;
+}
+
+.app-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.app-button img {
+    width: 150px;
+    height: auto;
+    border-radius: 6px;
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 15px;
+}
+
+.footer-divider {
+    border: none;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 0 0 15px 0;
+}
+
+.copyright {
+    text-align: left;
+    font-size: 0.8em;
+    color: #999;
+}
+
+.copyright-icon {
+    font-size: 1.2em;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+
+/* ============================================================
+   АДАПТИВНОСТЬ 
+   ============================================================ */
+
+/* --- 1. ПЛАНШЕТЫ (до 1100px): Сайдбар горизонтально, Контейнер сжимается --- */
+@media (max-width: 1100px) {
+
+    /* Шапка: Делаем компактнее */
+    .main-header {
+        padding: 10px 20px;
+    }
+
+    .logo {
+        font-size: 32px;
+    }
+
+    .main-nav ul {
+        gap: 20px;
+    }
+
+    .main-nav a {
+        font-size: 20px;
+    }
+
+    .main-content {
+        padding: 20px;
+        /* Упрощаем отступы для контента */
+       
+    }
+
+    /* Контейнер профиля: Сайдбар уходит наверх, основной блок занимает 100% */
+    .profile-container {
+        flex-direction: column;
+        gap: 20px;
+        max-width: 90%;
+        /* Даем ему немного сжаться */
+    }
+
+    /* Сайдбар (Главные кнопки "Профиль", "Мои списки") в ряд */
+    .profile-sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        /* Позволяет прокручивать, если кнопок много */
+        padding-bottom: 0 10px;
+        gap: 10px;
+    }
+
+    .nav-button {
+        white-space: nowrap;
+        flex-shrink: 0;
+        /* Кнопки не сжимаются */
+        padding: 15px 20px;
+        font-size: 14px;
+        text-align: center;
+    }
+
+
+    .profile-content {
+        flex-direction: column;
+    }
+/* Навигация под аватаром горизонтально */
+.profile-sub-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.sub-nav-button {
+    width: auto;
+    padding: 10px 15px;
+    font-size: 12px;
+}
+}
+
+
+/* --- 2. МОБИЛЬНЫЕ (до 850px): Скрываем меню, показываем бургер --- */
+@media (max-width: 850px) {
+
+    .main-header {
+        padding: 10px;
+        /* Уменьшаем отступы по краям */
+    }
+
+    .main-content {
+        padding: 15px;
+        /* Уменьшаем отступы основного контента */
+        padding-top: 80px;
+        /* Учитываем, что шапка стала меньше */
+    }
+
+    /* Скрываем текстовое меню */
+    .main-nav {
+        display: none;
+    }
+
+    /* Иконки остаются, но компактнее */
+    .header-right {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-right: 10px;
+    }
+
+    .icon {
+        font-size: 22px;
+    }
+
+    /* Показываем бургер */
+    .menu-icon {
+        display: block;
+        font-size: 26px;
+    }
+}
+
+/* --- 3. МИНИ-МОБИЛЬНЫЕ (до 600px): Вертикальные формы --- */
+@media (max-width: 600px) {
+
+    /* Формы */
+    .split-row {
+        flex-direction: column;
+        /* Имя и Фамилия друг под другом */
+        gap: 15px;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+        /* Сохранить сверху, Отмена снизу */
+        gap: 10px;
+    }
+
+    .action-button {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Футер становится вертикальным */
+    .footer-content-wrapper {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-column,
+    .app-download {
+        flex-basis: 100%;
+        margin-right: 0;
+        width: 100%;
+    }
+
+    .app-buttons {
+        align-items: center;
+    }
+}

@@ -1,0 +1,727 @@
+
+/* Базовый сброс и переменные */
+:root {
+    --main-bg: #1e1e1e;
+    --header-bg: #272727;
+    --text-light: #FFFFFF;
+    --text-gray: #AAAAAA;
+    --accent-purple: #9300ff;
+    /* Фиолетовая линия под шапкой */
+    --accent-red: #E50914;
+    /* Красный для кнопок */
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--main-bg);
+    color: var(--text-light);
+    margin: 0;
+    padding: 0;
+}
+
+/* ... (Остальные стили шрифтов и ссылок) ... */
+.arsenal-sc-regular {
+    font-family: "Arsenal SC", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.arsenal-sc-bold {
+    font-family: "Arsenal SC", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.arsenal-sc-regular-italic {
+    font-family: "Arsenal SC", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.arsenal-sc-bold-italic {
+    font-family: "Arsenal SC", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+}
+
+a {
+    color: var(--text-light);
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 1. Стили Шапки (Header) */
+/* CSS-стили для Шапки */
+.main-header {
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    border-bottom: none;
+}
+
+.main-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(31, 35, 43, 0.50);
+    z-index: -1;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.logo {
+    font-size: 50px;
+    color: rgba(179, 202, 255, 0.74);
+    font-family: "Arsenal SC",
+        sans-serif;
+    font-weight: 700;
+    font-style: italic;
+
+}
+
+.icon_img {
+    width: 90px;
+    height: 60px;
+    margin-right: 15px;
+}
+
+.search-box {
+    border-radius: 50%;
+    width: 50px;
+    /* Немного уменьшим размер */
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: rgba(179, 202, 255, 0.1);
+    /* Делаем фон прозрачным */
+    border: 2px solid #242938;
+    /* Рамка в цвет акцента */
+    opacity: 1;
+    /* Убираем низкую прозрачность */
+}
+
+/* Наведение: подсветка при наведении */
+.search-box:hover {
+    background-color: rgba(179, 202, 255, 0.1);
+    /* Легкий фон */
+    border-color: #ffffff;
+    /* Белая рамка */
+}
+
+/* Стилизация самой иконки (кнопки внутри .search-box).
+   Мы хотим, чтобы иконка Font Awesome отображалась.
+*/
+.search-icon {
+    cursor: pointer;
+    /* Иконка будет цветом текста */
+    color: black;
+    border: none;
+    background: none;
+    font-size: 22px;
+    /* Размер иконки */
+    padding: 0;
+    
+}
+
+/* При наведении на родительский блок, меняем цвет иконки */
+.search-box:hover .search-icon {
+    color: #ffffff;
+}
+
+.main-nav ul {
+    display: flex;
+    gap: 50px;
+    font-family: "Arsenal SC",
+        sans-serif;
+    font-weight: 700;
+    font-style: normal;
+
+}
+
+.main-nav a {
+    color: rgba(179, 202, 255, 0.74);
+    font-size: 25px;
+    transition: color 0.3s;
+
+}
+
+.main-nav a:hover,
+.main-nav a.active-nav {
+
+    color: rgba(179, 202, 255, 0.74);
+}
+
+.header-right {
+    display: flex;
+    gap: 35px;
+}
+
+.icon {
+    color: #ffffff;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+/* 2. Стили Главного Баннера (Hero Section) */
+
+.hero-section {
+    padding-top: 0;
+    height: 100vh;
+    background-image:
+        url('images/main_photo.png');
+    background-size: cover;
+    background-position: center top;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 40px 60px 40px;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin-bottom: 40px;
+}
+
+.movie-tags {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+    color: var(--text-gray);
+    font-size: 20px;
+
+}
+
+span {
+    background-color: rgba(30, 30, 30, 0.7);
+    border-radius: 30px;
+    padding: 4px;
+}
+
+.hero-content h1 {
+    font-size: 77px;
+    margin: 0 0 5px 0;
+    line-height: 1.1;
+    font-family: "Arsenal SC",
+        sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    color: whitesmoke;
+}
+
+.hero-content h2 {
+    font-size: 56px;
+    margin: 0 0 15px 0;
+    line-height: 1.1;
+    color: white;
+    letter-spacing: 7px;
+}
+
+.movie-description {
+    color: var(--text-light);
+    font-size: 1em;
+    margin-bottom: 30px;
+    line-height: 1.4;
+    max-width: 500px;
+    font-family: "Arsenal SC",
+        sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* ... (Стили кнопок) ... */
+.action-button {
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-row {
+    display: flex;
+    gap: 15px;
+    background-size: cover;
+    padding: 20px;
+}
+
+.button-icon {
+    font-size: 25px;
+    margin-left: 10px;
+}
+
+.watch-button {
+    background-color: rgba(30, 30, 30, 0.8);
+}
+
+.detail-button {
+    background-color: rgba(120, 32, 32, 0.8);
+}
+
+.action-button:hover {
+    filter: brightness(1.7);
+}
+
+
+/* 3. Стили Каруселей */
+
+.container {
+    max-width: 100%;
+    padding: 20px;
+    background-color: rgba(30, 30, 30, 0.8);
+}
+
+.header-container h2 {
+    font-size: 50px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    font-family: "Arsenal SC", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.carousel-container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
+    padding: 0 30px;
+}
+
+.carousel-viewport {
+    overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.4s ease-out;
+}
+
+/* --- ОБЩИЙ СТИЛЬ КАРТОЧКИ (4 В РЯДУ) --- */
+.movie-card {
+    /* Базовый размер: 4 карточки в ряд */
+    flex: 0 0 calc(25% - 20px);
+    margin: 0 10px;
+    box-sizing: border-box;
+    text-align: center;
+    position: relative;
+}
+
+/* --- МОДИФИКАТОР: ШИРОКАЯ КАРТОЧКА (2.5 В РЯДУ) --- */
+.movie-card.card-wide {
+    /* Размер для секции "Скоро": 2.5 карточки в ряд */
+    flex: 0 0 calc(40% - 20px);
+}
+
+/* Стиль изображения фильма */
+.movie-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+}
+
+.rating-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(179, 202, 255, 0.5);
+    color: white;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.rating-badge_stranger {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(124, 85, 45, 1);
+    color: white;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.movie-title {
+    margin-top: 10px;
+    font-weight: normal;
+    font-size: 1em;
+    color: white;
+    height: 3em;
+}
+
+/* Стиль кнопок навигации */
+.nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 70px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0.8;
+    transition: opacity 0.2s, background-color 0.2s;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-button:hover:not(:disabled) {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.nav-button:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.prev-button {
+    left: 0;
+}
+
+.next-button {
+    right: 0;
+}
+
+.arrow {
+    font-size: 2em;
+}
+
+/* 4. Стили Футера (Footer) */
+
+.site-footer {
+    background-color: #2e2a39;
+    color: #c7c7c7;
+    padding: 40px 20px 20px;
+    font-family: Arial, sans-serif;
+    margin-top: 50px;
+    font-size: 0.9em;
+}
+
+.footer-content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+
+.footer-column {
+    flex-basis: 20%;
+    margin-right: 30px;
+}
+
+.footer-column h3 {
+    color: white;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column li {
+    margin-bottom: 8px;
+}
+
+.app-download {
+    text-align: right;
+    flex-basis: 30%;
+}
+
+.app-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.app-button img {
+    width: 150px;
+    height: auto;
+    border-radius: 6px;
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 15px;
+}
+
+.footer-divider {
+    border: none;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 0 0 15px 0;
+}
+
+.copyright {
+    text-align: left;
+    font-size: 0.8em;
+    color: #999;
+}
+
+.copyright-icon {
+    font-size: 1.2em;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ======================================================= */
+/* 5. АДАПТИВНОСТЬ (MEDIA QUERIES) - ИСПРАВЛЕНЫ ОТСТУПЫ */
+/* ======================================================= */
+
+/* --- ИСПРАВЛЕНИЕ ШАПКИ ДЛЯ ВСЕХ МОБИЛЬНЫХ/ПЛАНШЕТОВ (ВАЖНО!) --- */
+@media (max-width: 1200px) {
+
+    /* Переключаем шапку на относительное позиционирование, 
+       чтобы она занимала место и не было лишнего отступа сверху 
+    */
+    .main-header {
+        position: relative;
+        background-color: var(--header-bg);
+        /* Делаем фон сплошным */
+        padding: 10px 20px;
+        border-bottom: 2px solid var(--accent-purple);
+        /* Можно оставить акцент */
+    }
+
+    .main-header::before {
+        content: none;
+        /* Убираем псевдоэлемент с градиентом */
+    }
+
+    /* --- Шапка (Остальные стили) --- */
+    .logo {
+        font-size: 40px;
+    }
+
+    .icon_img {
+        width: 70px;
+        height: 50px;
+    }
+
+    .main-nav {
+        display: none;
+    }
+
+    /* --- Баннер (Hero) --- */
+    .hero-section {
+        /* Высота теперь задается относительно, а не от высоты всего экрана */
+        min-height: 450px;
+        height: auto;
+        padding: 40px 20px 40px 20px;
+        /* Отступ сверху теперь зависит от высоты шапки */
+    }
+
+    .hero-content h1 {
+        font-size: 56px;
+    }
+
+    .hero-content h2 {
+        font-size: 40px;
+    }
+
+    /* --- Карусели --- */
+    .movie-card {
+        flex: 0 0 calc(33.333% - 20px);
+        /* 3 карточки в ряд */
+    }
+
+    .movie-card.card-wide {
+        flex: 0 0 calc(50% - 20px);
+        /* 2 широкие карточки в ряд */
+    }
+}
+
+
+/* ---------------------------------------------- */
+/* 5.2. Медиа-запросы для мобильных устройств (макс. 768px) */
+/* ---------------------------------------------- */
+@media (max-width: 768px) {
+
+    /* --- Шапка (Header) --- */
+    .main-header {
+        /* Шапка уже относительная, просто уменьшаем отступы */
+        padding: 10px 15px;
+    }
+
+    .logo {
+        font-size: 30px;
+    }
+
+    .icon_img {
+        width: 50px;
+        height: 35px;
+    }
+
+    .search-box {
+        display: none;
+        /* Скрываем поиск */
+    }
+
+    /* --- Баннер (Hero) --- */
+    .hero-section {
+        min-height: 350px;
+        /* Уменьшаем минимальную высоту */
+        height: auto;
+        padding: 20px 15px 30px 15px;
+        /* Уменьшаем внутренние отступы */
+    }
+
+    .hero-content h1 {
+        font-size: 36px;
+    }
+
+    .hero-content h2 {
+        font-size: 24px;
+        letter-spacing: 2px;
+    }
+
+    .movie-tags {
+        font-size: 14px;
+        gap: 10px;
+    }
+
+    .movie-description {
+        display: none;
+        /* Скрываем длинное описание */
+    }
+
+    .button-row {
+        flex-direction: column;
+        /* Кнопки в столбец */
+    }
+
+    /* --- Карусели --- */
+    .header-container h2 {
+        font-size: 24px;
+        margin-left: 15px;
+    }
+
+    .carousel-container {
+        padding: 0 10px;
+    }
+
+    .carousel-viewport { overflow: hidden; }
+.carousel-track { display: flex; transition: transform .3s ease; }
+.movie-card { flex: 0 0 auto; }
+
+
+    .movie-card {
+        flex: 0 0 calc(50% - 10px);
+        /* 2 карточки в ряд */
+        margin: 0 5px;
+    }
+
+    .movie-card.card-wide {
+        flex: 0 0 calc(100% - 20px);
+        /* 1 широкая карточка в ряд */
+    }
+
+    /* --- Футер (Footer) --- */
+    .footer-content-wrapper {
+        flex-direction: column;
+    }
+
+    .site-footer {
+        padding: 20px 15px;
+    }
+
+    .app-download {
+        order: -1;
+        text-align: left;
+    }
+
+    .app-buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .app-button img {
+        width: 100px;
+    }
+}
+
+
+
+.search-form{
+    width: 320px;
+    height: 42px;
+    border-radius: 999px;
+    padding: 0 10px;
+    gap: 8px;
+    background-color: rgba(179, 202, 255, 0.1);
+    border: 2px solid #242938;
+}
+
+.search-form input{
+    width: 100%;
+    height: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #fff;
+    font-size: 16px;
+}
+
+.search-form .search-icon{
+    color: #fff;
+    font-size: 18px;
+}

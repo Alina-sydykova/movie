@@ -1,0 +1,582 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+
+
+:root {
+    --color-dark-bg: #141416;
+    /* Исходный темно-серый (для шапки) */
+    --color-gradient-start: #1c1c1e;
+    /* Чуть светлее, чем шапка, для начала градиента */
+    --color-gradient-mid: #476082;
+    /* Глубокий сине-серый для мягкого перехода */
+    --color-sky-end: #c4e0e5;
+    /* Светлый голубовато-белый (Sky Blue-White) */
+    --color-footer-bg: #1c1c1e;
+    /* Цвет фона в футере */
+    /* ... (Остальные переменные) ... */
+    --padding-desktop: 40px;
+    --padding-tablet: 20px;
+    --padding-mobile: 15px;
+}
+
+body {
+    /* ИЗМЕНЕНИЕ: Вертикальный градиент: Темный -> Сине-серый -> Светлый (Sky Blue-White) */
+    background: linear-gradient(to bottom,
+            var(--color-gradient-start) 0%,
+            /* Начинаем с темно-серого */
+            var(--color-gradient-mid) 60%,
+            /* Мягкий, плавный переход через сине-серый */
+            var(--color-sky-end) 100%);
+    color: var(--color-text-light);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+
+
+.arsenal-sc-regular {
+    font-family: "Arsenal SC", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.arsenal-sc-bold {
+    font-family: "Arsenal SC", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.arsenal-sc-regular-italic {
+    font-family: "Arsenal SC", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.arsenal-sc-bold-italic {
+    font-family: "Arsenal SC", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+}
+
+a {
+    color: var(--text-light);
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 1. Стили Шапки (Header) */
+/* CSS-стили для Шапки */
+.main-header {
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    border-bottom: none;
+}
+
+.main-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(31, 35, 43, 0.50);
+    z-index: -1;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.logo {
+    font-size: 50px;
+    color: rgba(179, 202, 255, 0.74);
+    font-family: "Arsenal SC",
+        sans-serif;
+    font-weight: 700;
+    font-style: italic;
+
+}
+
+.icon_img {
+    width: 90px;
+    height: 60px;
+    margin-right: 15px;
+}
+
+.search-box {
+    border-radius: 50%;
+    width: 50px;
+    /* Немного уменьшим размер */
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    /* Убираем background: url(images/icon_search.png); */
+    background-color: white;
+    /* Делаем фон прозрачным */
+    border: 2px solid #242938;
+    /* Рамка в цвет акцента */
+    opacity: 1;
+    /* Убираем низкую прозрачность */
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Наведение: подсветка при наведении */
+.search-box:hover {
+    background-color: rgba(179, 202, 255, 0.1);
+    /* Легкий фон */
+    border-color: #ffffff;
+    /* Белая рамка */
+}
+
+/* Стилизация самой иконки (кнопки внутри .search-box).
+   Мы хотим, чтобы иконка Font Awesome отображалась.
+*/
+.search-icon {
+    cursor: pointer;
+    /* Иконка будет цветом текста */
+    color: black;
+    border: none;
+    background: none;
+    font-size: 22px;
+    /* Размер иконки */
+    padding: 0;
+    transition: color 0.3s;
+}
+
+/* При наведении на родительский блок, меняем цвет иконки */
+.search-box:hover .search-icon {
+    color: #ffffff;
+}
+
+.main-nav ul {
+    display: flex;
+    gap: 50px;
+    font-family: "Arsenal SC",
+        sans-serif;
+    font-weight: 700;
+    font-style: normal;
+
+}
+
+.main-nav a {
+    color: rgba(179, 202, 255, 0.74);
+    font-size: 25px;
+    transition: color 0.3s;
+
+}
+
+.main-nav a:hover,
+.main-nav a.active-nav {
+
+    color: rgba(179, 202, 255, 0.74);
+}
+
+.header-right {
+    display: flex;
+    gap: 35px;
+}
+
+.icon {
+    color: #ffffff;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+
+/* ььь */
+/* Стили для мобильного меню (скрыто на десктопе) */
+.menu-icon {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* ------------------- Основной Контент ------------------- */
+
+
+
+
+/* ------------------- 5. Стили Секции Новостей (News Section) ------------------- */
+
+.news-section {
+    padding: 20px 0; /* Внутренние отступы секции */
+    margin-bottom: 40px;
+    max-width: 100%; /* Ограничиваем ширину сетки, как в предыдущем примере */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.main-content {
+    padding: 20px 40px;
+    margin-top: 70px;
+}
+
+
+.page-title {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-family: "Arsenal SC",
+        sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    color: white;
+}
+
+.section-title {
+        padding-left: 20px; /* Отступ для заголовка */
+        color: var(--color-dark-bg); /* Темный текст на светлом фоне секции (если градиент светлеет) */
+        /* Если фон в этом месте темный, используйте: color: var(--color-text-light); */
+        color: white; /* Цвет текста для заголовка "Новости" */
+        font-size: 40px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        font-family: "Arsenal SC",
+        sans-serif;
+        font-weight: 700;
+        font-style: normal;
+      
+}
+
+/* ------------------- 6. Стили Сетки и Карточек (Адаптивная Сетка) ------------------- */
+
+/* Сетка карточек */
+.card-grid {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px; 
+    justify-content: center; /* Центрируем сетку */
+    padding: 0 10px; /* Небольшой горизонтальный отступ внутри секции */
+}
+
+/* Стили для отдельной карточки */
+.card {
+    background-color: #242938;
+    /* Темный фон карточки */
+    border-radius: 8px; 
+    overflow: hidden; 
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); /* Мягкое свечение/тень */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    /* Ширина для 3-х карточек в ряд: */
+    width: calc(32% - 10px); 
+    min-width: 250px; /* Минимальная ширина, чтобы контент не сжимался */
+    padding: 25px;
+}
+
+/* Эффект при наведении (опционально, для интерактивности) */
+.card:hover {
+    transform: translateY(-5px); /* Небольшой подъем */
+    box-shadow: 0 10px 25px rgba(179, 202, 255, 0.3); /* Акцентное свечение */
+}
+
+/* Стили для обертки изображения */
+.card-image-wrapper {
+    background-image: url('images/аватар.png'); 
+    background-size: cover;
+    background-position: center;
+    padding-top: 100.33%; 
+}
+
+
+.second{
+    background-image: url('images/serial1.jpg');
+}
+
+.third{
+    background-image: url("images/serial2.jpg");
+}
+
+.fourth{
+    background-image: url('images/serial3.jpg');
+}
+
+.fifth {
+    background-image: url('images/serial4.jpg');
+}
+
+
+.sixth {
+    background-image: url('images/serial5.jpg');
+}
+
+
+.seventh {
+    background-image: url('images/serial6.jpg');
+}
+
+.eigth {
+    background-image: url('images/serial7.jpg');
+}
+
+.ninth {
+    background-image: url('images/serial8.jpg');
+}
+
+
+
+
+
+/* Стили для текстового контента */
+.card-content {
+    padding: 10px 15px 15px; 
+    color: var(--color-text-light); /* Светлый текст */
+    flex-grow: 1;
+}
+
+.card-title {
+        font-family: "Arsenal SC",
+        sans-serif;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 30px;
+        font-weight: bold;
+        margin: 5px 0 8px;
+        line-height: 1.2;
+        color: white;
+}
+
+.card-meta {
+        font-size: 20px;
+        color: #b0b0b0; 
+        margin: 2px 0;
+        line-height: 1.3;
+        display: block; 
+        font-family: "Arsenal SC",
+        sans-serif;
+        font-weight: 400;
+        font-style: normal;
+}
+
+/* Объединяем дату и просмотры в одну строку с пробелом */
+.date-views {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    color: #888888;
+}
+
+/* Адаптивность для "спрыгивания" */
+@media (max-width: 1024px) {
+    .card {
+        width: calc(50% - 10px); /* 2 карточки в ряд на планшетах */
+        min-width: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .card {
+        width: 100%; /* 1 карточка в ряд на мобильных */
+    }
+}
+
+
+.site-footer {
+    background-color: #2e2a39;
+    color: #c7c7c7;
+    padding: 40px 20px 20px;
+    font-family: Arial, sans-serif;
+    margin-top: 50px;
+    font-size: 0.9em;
+}
+
+.footer-content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+
+.footer-column {
+    flex-basis: 20%;
+    margin-right: 30px;
+}
+
+.footer-column h3 {
+    color: white;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column li {
+    margin-bottom: 8px;
+}
+
+.app-download {
+    text-align: right;
+    flex-basis: 30%;
+}
+
+.app-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.app-button img {
+    width: 150px;
+    height: auto;
+    border-radius: 6px;
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 15px;
+}
+
+.footer-divider {
+    border: none;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 0 0 15px 0;
+}
+
+.copyright {
+    text-align: left;
+    font-size: 0.8em;
+    color: #999;
+}
+
+.copyright-icon {
+    font-size: 1.2em;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* ========================================================= */
+/* АДАПТИВНОСТЬ: ПЛАНШЕТЫ (до 1024px)           */
+/* ========================================================= */
+@media (max-width: 1024px) {
+
+    /* --- Шапка --- */
+    .main-header {
+        padding: 10px var(--padding-tablet);
+        /* Уменьшаем горизонтальный отступ */
+    }
+
+    .main-nav {
+        display: none;
+        /* Скрываем основное меню */
+    }
+
+    .menu-icon {
+        display: block;
+        /* Показываем иконку меню-гамбургера */
+    }
+
+    .logo {
+        font-size: 40px;
+        /* Уменьшаем размер логотипа */
+    }
+
+    .header-left {
+        gap: 15px;
+    }
+
+    .search-box {
+        width: 45px;
+        height: 45px;
+    }
+
+    /* --- Основной контент --- */
+    .main-content {
+        padding: 20px var(--padding-tablet);
+        /* Уменьшаем горизонтальный отступ */
+    }
+
+    .page-title {
+        font-size: 30px;
+    }
+
+    /* --- Секция Новостей (3 -> 2 колонки) --- */
+    .news-section {
+        padding: 20px 0;
+        /* Оставляем 0, так как отступы есть в .main-content */
+    }
+
+    .card-grid {
+        padding: 0 5px;
+        /* Небольшой отступ для сетки */
+    }
+
+    .card {
+        width: calc(50% - 10px);
+        /* 2 карточки в ряд (с учетом gap: 20px) */
+        min-width: 0;
+        padding: 20px;
+        /* Немного уменьшаем внутренний отступ */
+    }
+
+    .card-title {
+        font-size: 24px;
+        /* Уменьшаем размер заголовка карточки */
+    }
+
+    .card-meta {
+        font-size: 16px;
+        /* Уменьшаем размер мета-информации */
+    }
+
+    /* --- Футер --- */
+    .footer-content-wrapper {
+        flex-wrap: wrap;
+        /* Позволяем колонкам переноситься */
+        justify-content: flex-start;
+        max-width: 90%;
+    }
+
+    .footer-column {
+        flex-basis: 45%;
+        /* Две колонки в ряд */
+        margin-right: 5%;
+        margin-bottom: 20px;
+    }
+
+    .app-download {
+        flex-basis: 100%;
+        /* Занимает всю ширину */
+        text-align: left;
+    }
+
+    .app-buttons {
+        align-items: flex-start;
+        /* Прижимаем кнопки к левому краю */
+    }
+}

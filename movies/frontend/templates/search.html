@@ -1,0 +1,536 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>KINOTOO</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arsenal+SC:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- было: search.css -->
+    <link rel="stylesheet" href="{% static 'search.css' %}">
+</head>
+<body>
+    <form id="csrf-form" style="display:none;">
+        {% csrf_token %}
+    </form>
+
+    <header class="main-header">
+        <div class="header-left">
+            <div class="logo">
+                <!-- было: images/icon1.png -->
+                <img src="{% static 'images/icon1.png' %}" alt="icon" class="icon_img">KINOTOO
+            </div>
+
+            <div class="search-box">
+                <button class="search-icon">
+                    <!-- было: search.html -->
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-search"></i>
+                    </a>
+                </button>
+            </div>
+        </div>
+
+        <nav class="main-nav">
+            <ul>
+                <!-- было: movie.html -->
+                <li><a href="{% url 'home' %}" class="active-nav">Фильмы</a></li>
+
+                <!-- было: # -->
+                <li><a href="{% url 'series' %}">Сериалы</a></li>
+
+                <!-- было: news.html -->
+                <li><a href="{% url 'news' %}">Новости</a></li>
+
+                <!-- было: schedule.html -->
+                <li><a href="{% url 'calendar' %}">Календарь</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-right">
+            <!-- у тебя тут уже было Django -->
+            <a href="{% url 'push' %}"><i class="fas fa-bell icon"></i></a>
+
+            <!-- было: user.html -->
+            <a href="{% url 'profile' %}"><i class="fas fa-user-circle icon"></i></a>
+
+            <!-- было: favourite.html -->
+            <a href="{% url 'favorites' %}"><i class="fas fa-bookmark icon"></i></a>
+        </div>
+    </header>
+
+    <main class="main-content">
+
+        <div class="search-section">
+            <!-- если хочешь реально искать: сделаем form, но дизайн не меняю -->
+            <form method="get" action="{% url 'search' %}" class="search-input-wrapper">
+                <input type="text" name="q" placeholder="Поиск сериала, актера, жанра..." class="main-search-input" value="{{ query|default:'' }}">
+                <button class="search-submit-button" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+
+
+
+        {% if query %}
+            <h1 class="page-title">Результаты поиска</h1>
+
+            {% if movies %}
+                <div class="movie-grid">
+                    {% for movie in movies %}
+                        <div class="movie-card" data-imdb="{{ movie.imdbID }}">
+                            <div class="movie-poster">
+                                <a href="{% url 'movie_detail' movie.imdbID %}" class="movie-link">
+                                    {% if movie.Poster and movie.Poster != "N/A" %}
+                                        <img class="poster-image" src="{{ movie.Poster }}" alt="{{ movie.Title }}">
+                                    {% else %}
+                                        <img class="poster-image" src="{% static 'images/icon1.png' %}" alt="{{ movie.Title }}">
+                                    {% endif %}
+                                </a>
+                                <div class="poster-overlay">
+                                    {% if movie.Year %}
+                                        <span class="rating-label">{{ movie.Year }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="movie-info">
+                                <a href="{% url 'movie_detail' movie.imdbID %}" class="movie-link">
+                                    <h3 class="movie-title">{{ movie.Title }}</h3>
+                                </a>
+                                <div class="movie-meta">
+                                    {% if movie.avg_rating %}
+                                        <span class="meta-item">Рейтинг: {{ movie.avg_rating|floatformat:1 }}</span>
+                                    {% elif movie.imdbRating %}
+                                        <span class="meta-item">IMDb: {{ movie.imdbRating }}</span>
+                                    {% endif %}
+                                    {% if movie.rating_count %}
+                                        <span class="meta-item">Оценок: {{ movie.rating_count }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="card-actions">
+                                    <button class="action-btn favorite-btn{% if movie.is_favorite %} active{% endif %}"
+                                            data-imdb="{{ movie.imdbID }}"
+                                            data-title="{{ movie.Title }}"
+                                            data-year="{{ movie.Year }}"
+                                            data-poster="{{ movie.Poster }}"
+                                            aria-label="Избранное">
+                                        <i class="fas fa-heart"></i>
+                                    </button>
+                                    <button class="action-btn watch-later-btn{% if movie.is_watch_later %} active{% endif %}"
+                                            data-imdb="{{ movie.imdbID }}"
+                                            data-title="{{ movie.Title }}"
+                                            data-year="{{ movie.Year }}"
+                                            data-poster="{{ movie.Poster }}"
+                                            aria-label="Посмотрю позже">
+                                        <i class="fas fa-clock"></i>
+                                    </button>
+                                    <button class="action-btn family-btn{% if movie.is_family %} active{% endif %}"
+                                            data-imdb="{{ movie.imdbID }}"
+                                            data-title="{{ movie.Title }}"
+                                            data-year="{{ movie.Year }}"
+                                            data-poster="{{ movie.Poster }}"
+                                            aria-label="Семья">
+                                        <i class="fas fa-users"></i>
+                                    </button>
+                                    <a href="{% url 'movie_detail' movie.imdbID %}" class="details-button">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="no-results">Ничего не найдено.</p>
+            {% endif %}
+        {% else %}
+            <h1 class="page-title">Рекомендации</h1>
+
+            <div class="movie-grid">
+
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img class="poster-image" src="{% static 'images/serial1.jpg' %}" alt="Зверополис 2">
+                        <div class="poster-overlay">
+                            <span class="rating-label">7.9</span>
+                            <span class="age-rating-label">6+</span>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Игра престолов</h3>
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img class="poster-image" src="{% static 'images/serial2.jpg' %}" alt="Иллюзионист Обмана">
+                        <div class="poster-overlay">
+                            <span class="rating-label">6.9</span>
+                            <span class="age-rating-label">12+</span>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Ход королевы</h3>
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img class="poster-image" src="{% static 'images/serial3.jpg' %}" alt="Айдан">
+                        <div class="poster-overlay">
+                            <span class="rating-label">5.4</span>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Люцифер</h3>
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img class="poster-image" src="{% static 'images/serial4.jpg' %}" alt="Дракула">
+                        <div class="poster-overlay">
+                            <span class="rating-label">6.9</span>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Энн с двумя н</h3>
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img class="poster-image" src="{% static 'images/serial5.jpg' %}" alt="Планета Смерти">
+                        <div class="poster-overlay">
+                            <span class="rating-label">7.5</span>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Время путешествий</h3>
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img class="poster-image" src="{% static 'images/serial6.jpg' %}" alt="Зверополис 2">
+                        <div class="poster-overlay">
+                            <span class="rating-label">7.9</span>
+                            <span class="age-rating-label">6+</span>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Монстры на каникулах</h3>
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img class="poster-image" src="{% static 'images/serial7.jpg' %}" alt="Иллюзионист Обмана">
+                        <div class="poster-overlay">
+                            <span class="rating-label">6.9</span>
+                            <span class="age-rating-label">12+</span>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Семейка Крудс</h3>
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img class="poster-image" src="{% static 'images/serial8.jpg' %}" alt="Айдан">
+                        <div class="poster-overlay">
+                            <span class="rating-label">5.4</span>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Гравити фолз</h3>
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img class="poster-image" src="{% static 'images/serial9.jpg' %}" alt="Дракула">
+                        <div class="poster-overlay">
+                            <span class="rating-label">6.9</span>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Клинок,рассекающий демонов</h3>
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img class="poster-image" src="{% static 'images/планета.png' %}" alt="Планета Смерти">
+                        <div class="poster-overlay">
+                            <span class="rating-label">7.5</span>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Планета Смерти</h3>
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img class="poster-image" src="{% static 'images/зверополис.png' %}" alt="Зверополис 2">
+                        <div class="poster-overlay">
+                            <span class="rating-label">7.9</span>
+                            <span class="age-rating-label">6+</span>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Зверополис 2</h3>
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img class="poster-image" src="{% static 'images/Иллюзия.png' %}" alt="Иллюзионист Обмана">
+                        <div class="poster-overlay">
+                            <span class="rating-label">6.9</span>
+                            <span class="age-rating-label">12+</span>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Иллюзионист обмана</h3>
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img class="poster-image" src="{% static 'images/алдан.png' %}" alt="Айдан">
+                        <div class="poster-overlay">
+                            <span class="rating-label">5.4</span>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Алдан</h3>
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img class="poster-image" src="{% static 'images/дракула.png' %}" alt="Дракула">
+                        <div class="poster-overlay">
+                            <span class="rating-label">6.9</span>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Дракула</h3>
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img class="poster-image" src="{% static 'images/планета.png' %}" alt="Планета Смерти">
+                        <div class="poster-overlay">
+                            <span class="rating-label">7.5</span>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Планета Смерти</h3>
+                    </div>
+                </div>
+
+            </div>
+        {% endif %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content-wrapper">
+            <div class="footer-column about-us">
+                <h3>О нас</h3>
+                <ul>
+                    <li>О компании</li>
+                    <li>Контакты</li>
+                    <li>Новости</li>
+                    <li>Пользовательское соглашение</li>
+                    <li>Политика конфиденциальности</li>
+                </ul>
+            </div>
+            <div class="footer-column help">
+                <h3>Помощь</h3>
+                <ul>
+                    <li>Сообщить об ошибке</li>
+                    <li>F.A.Q.</li>
+                </ul>
+            </div>
+            <div class="footer-column social">
+                <h3>Социальные сети</h3>
+                <ul>
+                    <li>Instagram</li>
+                    <li>VK</li>
+                    <li>Telegram</li>
+                </ul>
+            </div>
+            <div class="footer-column app-download">
+                <h3>Скачать приложение</h3>
+                <div class="app-buttons">
+                    <a href="#" class="app-button">
+                        <img src="{% static 'images/footrer_icon.png' %}" alt="Google Play">
+                    </a>
+                    <a href="#" class="app-button">
+                        <img src="{% static 'images/footer_icon2.png' %}" alt="App Store">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <hr class="footer-divider">
+            <p class="copyright">
+                <span class="copyright-icon">©</span> 2015 ООО "КиноТоо"
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const getCookie = (name) => {
+            const hiddenToken = document.querySelector('#csrf-form input[name="csrfmiddlewaretoken"]');
+            if (hiddenToken && hiddenToken.value) return hiddenToken.value;
+            const meta = document.querySelector('meta[name="csrf-token"]');
+            if (meta && meta.content && meta.content !== "NOTPROVIDED") return meta.content;
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        };
+
+        document.querySelectorAll('.favorite-btn').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const payload = {
+                    imdb_id: btn.dataset.imdb,
+                    title: btn.dataset.title,
+                    year: btn.dataset.year,
+                    poster: btn.dataset.poster,
+                };
+                fetch("{% url 'toggle_favorite' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": getCookie("csrftoken"),
+                    },
+                    body: JSON.stringify(payload),
+                })
+                .then((res) => {
+                    if (res.status === 403) {
+                        window.location.href = "{% url 'login' %}";
+                        return null;
+                    }
+                    if (res.redirected) {
+                        window.location.href = res.url;
+                        return null;
+                    }
+                    return res.json();
+                })
+                .then((data) => {
+                    if (!data) return;
+                    if (data.status === "added") {
+                        btn.classList.add("active");
+                    } else if (data.status === "removed") {
+                        btn.classList.remove("active");
+                    }
+                });
+            });
+        });
+        document.querySelectorAll('.watch-later-btn').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const payload = {
+                    imdb_id: btn.dataset.imdb,
+                    title: btn.dataset.title,
+                    year: btn.dataset.year,
+                    poster: btn.dataset.poster,
+                };
+
+                fetch("{% url 'toggle_watch_later' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": getCookie("csrftoken"),
+                    },
+                    body: JSON.stringify(payload),
+                })
+                .then((res) => {
+                    if (res.status === 403) {
+                        window.location.href = "{% url 'login' %}";
+                        return null;
+                    }
+                    if (res.redirected) {
+                        window.location.href = res.url;
+                        return null;
+                    }
+                    return res.json();
+                })
+                .then((data) => {
+                    if (!data) return;
+                    if (data.status === "added") {
+                        btn.classList.add("active");
+                    } else if (data.status === "removed") {
+                        btn.classList.remove("active");
+                    }
+                });
+            });
+        });
+
+        document.querySelectorAll('.family-btn').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const payload = {
+                    imdb_id: btn.dataset.imdb,
+                    title: btn.dataset.title,
+                    year: btn.dataset.year,
+                    poster: btn.dataset.poster,
+                };
+
+                fetch("{% url 'toggle_family' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": getCookie("csrftoken"),
+                    },
+                    body: JSON.stringify(payload),
+                })
+                .then((res) => {
+                    if (res.status === 403) {
+                        window.location.href = "{% url 'login' %}";
+                        return null;
+                    }
+                    if (res.redirected) {
+                        window.location.href = res.url;
+                        return null;
+                    }
+                    return res.json();
+                })
+                .then((data) => {
+                    if (!data) return;
+                    if (data.status === "added") {
+                        btn.classList.add("active");
+                    } else if (data.status === "removed") {
+                        btn.classList.remove("active");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

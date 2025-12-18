@@ -1,0 +1,345 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>KINOTOO | {{ movie.Title }}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arsenal+SC:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="{% static 'search.css' %}">
+    <link rel="stylesheet" href="{% static 'detail.css' %}">
+</head>
+<body>
+    <form id="csrf-form" style="display:none;">
+        {% csrf_token %}
+    </form>
+
+    <header class="main-header">
+        <div class="header-left">
+            <div class="logo">
+                <img src="{% static 'images/icon1.png' %}" alt="icon" class="icon_img">KINOTOO
+            </div>
+            <div class="search-box">
+                <button class="search-icon">
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-search"></i>
+                    </a>
+                </button>
+            </div>
+        </div>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="{% url 'home' %}" class="active-nav">Фильмы</a></li>
+                <li><a href="{% url 'series' %}">Сериалы</a></li>
+                <li><a href="{% url 'news' %}">Новости</a></li>
+                <li><a href="{% url 'calendar' %}">Календарь</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-right">
+            <a href="{% url 'push' %}"><i class="fas fa-bell icon"></i></a>
+            <a href="{% url 'profile' %}"><i class="fas fa-user-circle icon"></i></a>
+            <a href="{% url 'favorites' %}"><i class="fas fa-bookmark icon"></i></a>
+        </div>
+    </header>
+
+    <main class="main-content detail-page">
+        <div class="detail-hero">
+            <div class="detail-poster">
+                {% if movie.Poster and movie.Poster != "N/A" %}
+                    <img src="{{ movie.Poster }}" alt="{{ movie.Title }}">
+                {% else %}
+                    <div class="detail-poster-fallback">
+                        <img src="{% static 'images/icon1.png' %}" alt="{{ movie.Title }}">
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="detail-info">
+                <div class="detail-breadcrumbs">
+                    <a href="{% url 'search' %}" class="crumb-link"><i class="fas fa-arrow-left"></i> Назад к поиску</a>
+                </div>
+
+                <h1 class="detail-title">{{ movie.Title }}</h1>
+
+                <div class="detail-subtitle">
+                    {% if movie.Year %}<span class="chip">{{ movie.Year }}</span>{% endif %}
+                    {% if movie.Rated and movie.Rated != "N/A" %}<span class="chip">{{ movie.Rated }}</span>{% endif %}
+                    {% if movie.Runtime and movie.Runtime != "N/A" %}<span class="chip">{{ movie.Runtime }}</span>{% endif %}
+                    {% if movie.Genre and movie.Genre != "N/A" %}<span class="chip">{{ movie.Genre }}</span>{% endif %}
+                </div>
+
+                {% if movie.Plot and movie.Plot != "N/A" %}
+                    <p class="detail-plot">{{ movie.Plot }}</p>
+                {% endif %}
+
+                <div class="detail-actions">
+                    <button class="detail-action-btn favorite-btn{% if is_favorite %} active{% endif %}"
+                            data-imdb="{{ movie.imdbID }}"
+                            data-title="{{ movie.Title }}"
+                            data-year="{{ movie.Year }}"
+                            data-poster="{{ movie.Poster }}">
+                        <i class="fas fa-heart"></i><span>Избранное</span>
+                    </button>
+
+                    <button class="detail-action-btn watch-later-btn{% if is_watch_later %} active{% endif %}"
+                            data-imdb="{{ movie.imdbID }}"
+                            data-title="{{ movie.Title }}"
+                            data-year="{{ movie.Year }}"
+                            data-poster="{{ movie.Poster }}">
+                        <i class="fas fa-clock"></i><span>Посмотрю позже</span>
+                    </button>
+
+                    <button class="detail-action-btn family-btn{% if is_family %} active{% endif %}"
+                            data-imdb="{{ movie.imdbID }}"
+                            data-title="{{ movie.Title }}"
+                            data-year="{{ movie.Year }}"
+                            data-poster="{{ movie.Poster }}">
+                        <i class="fas fa-users"></i><span>Семья</span>
+                    </button>
+                </div>
+
+                <div class="detail-ratings">
+                    <div class="detail-rating-block">
+                        <div class="detail-rating-head">
+                            <span class="detail-rating-label">Ваша оценка</span>
+                            {% if avg_rating %}
+                                <span class="detail-rating-summary">Средняя: {{ avg_rating|floatformat:1 }} ({{ rating_count }})</span>
+                            {% endif %}
+                        </div>
+                        <div class="rating-widget"
+                             data-imdb="{{ movie.imdbID }}"
+                             data-title="{{ movie.Title }}"
+                             data-year="{{ movie.Year }}"
+                             data-poster="{{ movie.Poster }}">
+                            {% for value in rating_range %}
+                                <button type="button"
+                                        class="rating-star{% if user_rating and value <= user_rating %} active{% endif %}"
+                                        data-value="{{ value }}">
+                                    {{ value }}
+                                </button>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="detail-external">
+                        {% if movie.imdbRating and movie.imdbRating != "N/A" %}
+                            <div class="external-item">
+                                <span class="external-label">IMDb</span>
+                                <span class="external-value">{{ movie.imdbRating }}</span>
+                            </div>
+                        {% endif %}
+                        {% if movie.Metascore and movie.Metascore != "N/A" %}
+                            <div class="external-item">
+                                <span class="external-label">Metascore</span>
+                                <span class="external-value">{{ movie.Metascore }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-facts">
+            <div class="fact">
+                <div class="fact-label">Страна</div>
+                <div class="fact-value">{{ movie.Country|default:"—" }}</div>
+            </div>
+            <div class="fact">
+                <div class="fact-label">Режиссёр</div>
+                <div class="fact-value">{{ movie.Director|default:"—" }}</div>
+            </div>
+            <div class="fact">
+                <div class="fact-label">Сценарий</div>
+                <div class="fact-value">{{ movie.Writer|default:"—" }}</div>
+            </div>
+            <div class="fact">
+                <div class="fact-label">Актёры</div>
+                <div class="fact-value">{{ movie.Actors|default:"—" }}</div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content-wrapper">
+            <div class="footer-column about-us">
+                <h3>О нас</h3>
+                <ul>
+                    <li>О компании</li>
+                    <li>Контакты</li>
+                    <li>Новости</li>
+                    <li>Пользовательское соглашение</li>
+                    <li>Политика конфиденциальности</li>
+                </ul>
+            </div>
+            <div class="footer-column help">
+                <h3>Помощь</h3>
+                <ul>
+                    <li>Сообщить об ошибке</li>
+                    <li>F.A.Q.</li>
+                </ul>
+            </div>
+            <div class="footer-column social">
+                <h3>Социальные сети</h3>
+                <ul>
+                    <li>Instagram</li>
+                    <li>VK</li>
+                    <li>Telegram</li>
+                </ul>
+            </div>
+            <div class="footer-column app-download">
+                <h3>Скачать приложение</h3>
+                <div class="app-buttons">
+                    <a href="#" class="app-button">
+                        <img src="{% static 'images/footrer_icon.png' %}" alt="Google Play">
+                    </a>
+                    <a href="#" class="app-button">
+                        <img src="{% static 'images/footer_icon2.png' %}" alt="App Store">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <hr class="footer-divider">
+            <p class="copyright">
+                <span class="copyright-icon">©</span> 2015 ООО "КиноТоо"
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const getCookie = (name) => {
+            const hiddenToken = document.querySelector('#csrf-form input[name="csrfmiddlewaretoken"]');
+            if (hiddenToken && hiddenToken.value) return hiddenToken.value;
+            const meta = document.querySelector('meta[name="csrf-token"]');
+            if (meta && meta.content && meta.content !== "NOTPROVIDED") return meta.content;
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        };
+
+        const toggleButton = (btn, url) => {
+            const payload = {
+                imdb_id: btn.dataset.imdb,
+                title: btn.dataset.title,
+                year: btn.dataset.year,
+                poster: btn.dataset.poster,
+            };
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCookie("csrftoken"),
+                },
+                body: JSON.stringify(payload),
+            })
+            .then((res) => {
+                if (res.status === 403) {
+                    window.location.href = "{% url 'login' %}";
+                    return null;
+                }
+                if (res.redirected) {
+                    window.location.href = res.url;
+                    return null;
+                }
+                return res.json();
+            })
+            .then((data) => {
+                if (!data) return;
+                btn.classList.toggle("active", data.status === "added");
+                if (data.status === "removed") btn.classList.remove("active");
+            });
+        };
+
+        document.querySelectorAll(".favorite-btn").forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                toggleButton(btn, "{% url 'toggle_favorite' %}");
+            });
+        });
+
+        document.querySelectorAll(".watch-later-btn").forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                toggleButton(btn, "{% url 'toggle_watch_later' %}");
+            });
+        });
+
+        document.querySelectorAll(".family-btn").forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                toggleButton(btn, "{% url 'toggle_family' %}");
+            });
+        });
+
+        const ratingWidget = document.querySelector('.rating-widget');
+        const ratingSummary = document.querySelector('.detail-rating-summary');
+        if (ratingWidget) {
+            ratingWidget.addEventListener('click', (e) => {
+                const target = e.target.closest('.rating-star');
+                if (!target) return;
+
+                const rating = target.dataset.value;
+                const payload = {
+                    imdb_id: ratingWidget.dataset.imdb,
+                    rating: rating,
+                    title: ratingWidget.dataset.title,
+                    year: ratingWidget.dataset.year,
+                    poster: ratingWidget.dataset.poster,
+                };
+
+                fetch("{% url 'rate_movie' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": getCookie("csrftoken"),
+                    },
+                    body: JSON.stringify(payload),
+                })
+                .then((res) => {
+                    if (res.status === 403) {
+                        window.location.href = "{% url 'login' %}";
+                        return null;
+                    }
+                    if (res.redirected) {
+                        window.location.href = res.url;
+                        return null;
+                    }
+                    return res.json();
+                })
+                .then((data) => {
+                    if (!data) return;
+                    if (data.status === "ok") {
+                        const value = parseInt(rating, 10);
+                        ratingWidget.querySelectorAll(".rating-star").forEach((star) => {
+                            const starValue = parseInt(star.dataset.value, 10);
+                            star.classList.toggle("active", starValue <= value);
+                        });
+                        if (ratingSummary && data.avg_rating) {
+                            ratingSummary.textContent = `Средняя: ${Number(data.avg_rating).toFixed(1)} (${data.count})`;
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,222 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINOTOO</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arsenal+SC:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS из static -->
+    <link rel="stylesheet" href="{% static 'describe.css' %}">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="header-left">
+        <div class="logo">
+            <img src="{% static 'images/icon1.png' %}" alt="icon" class="icon_img">KINOTOO
+        </div>
+
+        <div class="search-box">
+            <!-- поиск у тебя на главной через ?q= -->
+            <a class="search-icon" href="{% url 'home' %}">
+                <i class="fas fa-search"></i>
+            </a>
+        </div>
+    </div>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="{% url 'home' %}" class="active-nav">Фильмы</a></li>
+            <li><a href="{% url 'series' %}">Сериалы</a></li>
+            <li><a href="{% url 'news' %}">Новости</a></li>
+            <li><a href="{% url 'calendar' %}">Календарь</a></li>
+        </ul>
+    </nav>
+
+    <div class="header-right">
+        <!-- push.html нет в urls -> оставляем # -->
+        <a href="{% url 'push' %}"><i class="fas fa-bell icon"></i></a>
+
+        <a href="{% url 'profile' %}"><i class="fas fa-user-circle icon"></i></a>
+        <a href="{% url 'favorites' %}"><i class="fas fa-bookmark icon"></i></a>
+    </div>
+</header>
+
+<main class="main-content">
+    <div class="movie-card">
+
+        <div class="left-column">
+            <div class="poster-block">
+                <div class="main-poster">
+                    <div class="poster-overlay">ИГРА ПРЕСТОЛОВ</div>
+                </div>
+                <div class="trailer-poster"></div>
+            </div>
+
+            <button class="add-to-folder-button">Добавить в папку</button>
+        </div>
+
+        <div class="center-column">
+            <h1 class="title">Игра Престолов (сериал 2011-2019)</h1>
+            <p class="subtitle">GAME OF THRONES 18+</p>
+            <p class="description">
+                Рыцари, мертвецы и драконы — в эпической битве за судьбы мира. Сериал, который навсегда изменил телевидение
+            </p>
+
+            <div class="actions">
+                <button class="watch-button">СМОТРЕТЬ <span class="icon">▶</span></button>
+                <button class="bookmark-button" title="Добавить в закладки">
+                    <i class="fas fa-bookmark icon"></i>
+                </button>
+            </div>
+
+            <h2 class="section-title">О СЕРИАЛЕ</h2>
+            <div class="details-grid">
+                <div class="details-left">
+                    <p>Год производства</p>
+                    <p>Платформа</p>
+                    <p>Страна</p>
+                    <p>Жанр</p>
+                    <p>Слова</p>
+                    <p>Слоган</p>
+                    <p>Режиссер</p>
+                    <p>Сценарий</p>
+                    <p>Продюсер</p>
+                    <p>Оператор</p>
+                    <p>Композитор</p>
+                    <p>Художник</p>
+                    <p>Монтажер</p>
+                    <p>Премьера в России</p>
+                    <p>Премьера в мире</p>
+                    <p>Цифровой релиз</p>
+                    <p>Возраст</p>
+                    <p>Время серии</p>
+                </div>
+                <div class="details-right">
+                    <p>2011(8 сезонов)</p>
+                    <p>HBO</p>
+                    <p>США, Великобритания</p>
+                    <p>фэнтези, драма, боевик, мелодрама, приключения</p>
+                    <p>...</p>
+                    <p>"ПОБЕДА ИЛИ СМЕРТЬ"</p>
+                    <p>Дэвид Наттер, Алан Тейлор, Алекс Гилл ...</p>
+                    <p>Дэвид Бениофф, Джордж Р.Р. Мартин, Д.Б. Уайсс ...</p>
+                    <p>Дэвид Бениофф, Д.Б. Уайсс, Джордж Р.Р. Мартин ...</p>
+                    <p>Эднет Холлеймлз, Джонатан Фриман, Роберт МакЛахлен ...</p>
+                    <p>Рамин Джавади</p>
+                    <p>Декорис Райан, Дениэлла Депюски, Филипп Эппог ...</p>
+                    <p>Кэти Вейланд, Френсис Паркер, Кристин Гилл ...</p>
+                    <p>8 сентября 2011</p>
+                    <p>17 апреля 2011</p>
+                    <p>17 апреля 2011, «HBO»</p>
+                    <p>18+</p>
+                    <p>55 мин</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="rating-block">
+                <div class="rating-value">9.0</div>
+                <div class="rating-meta">
+                    <span class="top-label">топ 250</span>
+                    <span class="place-label">1 место</span>
+                    <div class="reviews-count">1 397 583 оценки</div>
+                </div>
+                <button class="rate-button">ОЦЕНИТЬ СЕРИАЛ</button>
+            </div>
+
+            <div class="cast-block">
+                <div class="cast-group">
+                    <p class="cast-title">В главных ролях</p>
+                    <ul>
+                        <li><a href="#">Питер Динклэйдж</a></li>
+                        <li><a href="#">Лина Хиди</a></li>
+                        <li><a href="#">Эмилия Кларк</a></li>
+                        <li><a href="#">Кит Харингтон</a></li>
+                        <li><a href="#">Софи Тернер</a></li>
+                        <li><a href="#">Мэйси Уильямс</a></li>
+                        <li><a href="#">Николай Костер-Вальдау</a></li>
+                        <li><a href="#">Иэн Глен</a></li>
+                        <li><a href="#">Альфи Аллен</a></li>
+                        <li><a href="#">Джон Брэдли</a></li>
+                    </ul>
+                    <p class="role-count">781 актер</p>
+                </div>
+
+                <div class="cast-group">
+                    <p class="cast-title">Роли дублировали</p>
+                    <ul>
+                        <li><a href="#">Петр Иващенко</a></li>
+                        <li><a href="#">Михаил Черняк</a></li>
+                        <li><a href="#">Нина Тобилевич</a></li>
+                        <li><a href="#">Юлия Рудина</a></li>
+                        <li><a href="#">Ольга Шорохова</a></li>
+                    </ul>
+                    <p class="role-count">60 актеров</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-content-wrapper">
+        <div class="footer-column about-us">
+            <h3>О нас</h3>
+            <ul>
+                <li>О компании</li>
+                <li>Контакты</li>
+                <li>Новости</li>
+                <li>Пользовательское соглашение</li>
+                <li>Политика конфиденциальности</li>
+            </ul>
+        </div>
+
+        <div class="footer-column help">
+            <h3>Помощь</h3>
+            <ul>
+                <li>Сообщить об ошибке</li>
+                <li>F.A.Q.</li>
+            </ul>
+        </div>
+
+        <div class="footer-column social">
+            <h3>Социальные сети</h3>
+            <ul>
+                <li>Instagram</li>
+                <li>VK</li>
+                <li>Telegram</li>
+            </ul>
+        </div>
+
+        <div class="footer-column app-download">
+            <h3>Скачать приложение</h3>
+            <div class="app-buttons">
+                <a href="#" class="app-button">
+                    <img src="{% static 'images/footrer_icon.png' %}" alt="Google Play">
+                </a>
+                <a href="#" class="app-button">
+                    <img src="{% static 'images/footer_icon2.png' %}" alt="App Store">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <hr class="footer-divider">
+        <p class="copyright">
+            <span class="copyright-icon">©</span> 2015 ООО "КиноТоо"
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>

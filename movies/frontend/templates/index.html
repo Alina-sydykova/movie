@@ -1,0 +1,247 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINOTOO</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arsenal+SC:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- было: style.css -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="header-left">
+        <div class="logo">
+            <img src="{% static 'images/icon1.png' %}" alt="icon" class="icon_img">
+            KINOTOO
+        </div>
+
+        <div class="search-box">
+            <a href="{% url 'search' %}" class="search-icon" aria-label="Поиск">
+                <i class="fas fa-search"></i>
+            </a>
+        </div>
+    </div>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="{% url 'home' %}" class="active-nav">Фильмы</a></li>
+            <li><a href="{% url 'series' %}">Сериалы</a></li>
+            <li><a href="{% url 'news' %}">Новости</a></li>
+            <li><a href="{% url 'calendar' %}">Календарь</a></li>
+        </ul>
+    </nav>
+
+    <div class="header-right">
+       <a href="{% url 'push' %}"><i class="fas fa-bell icon"></i></a>
+
+        <a href="{% url 'profile' %}"><i class="fas fa-user-circle icon"></i></a>
+        <a href="{% url 'favorites' %}"><i class="fas fa-bookmark icon"></i></a>
+    </div>
+</header>
+
+<main class="hero-section">
+    <div class="hero-content">
+        <div class="movie-tags">
+            <span>2025</span>
+            <span>16+</span>
+            <span>Сериал</span>
+            <span>Драмы</span>
+            <span>Ужасы</span>
+            <span>Научная фантастика</span>
+        </div>
+
+        <h1>Очень странные дела</h1>
+        <h2>STRANGER THINGS</h2>
+
+        <p class="movie-description">
+            Когда исчезает мальчик, жители небольшого городка узнают секрет, связанный
+            с тайными экспериментами, ужасными сверхъестественными силами и странной маленькой девочкой.
+        </p>
+
+        <div class="button-row">
+            <button class="action-button watch-button">
+                СМОТРЕТЬ
+                <i class="fas fa-play-circle button-icon"></i>
+            </button>
+            <button class="action-button detail-button">
+                ПОДРОБНЕЕ
+                <i class="fas fa-info-circle button-icon"></i>
+            </button>
+        </div>
+    </div>
+</main>
+
+<!-- ===== СЕЙЧАС СМОТРЯТ ===== -->
+<div class="container">
+    <div class="header-container">
+        <h2>СЕЙЧАС СМОТРЯТ ></h2>
+    </div>
+
+    <div class="carousel-container">
+        <button class="nav-button prev-button" id="prevButton_now" disabled>
+            <span class="arrow">&#9664;</span>
+        </button>
+
+        <div class="carousel-viewport">
+            <div class="carousel-track" id="carouselTrack_now">
+                <div class="movie-card"><img src="{% static 'images/1photo.png' %}" alt=""></div>
+                <div class="movie-card"><img src="{% static 'images/2photo.png' %}" alt=""></div>
+                <div class="movie-card"><img src="{% static 'images/3photo.png' %}" alt=""></div>
+                <div class="movie-card"><img src="{% static 'images/4photo.png' %}" alt=""></div>
+                <div class="movie-card"><img src="{% static 'images/5photo.png' %}" alt=""></div>
+                <div class="movie-card"><img src="{% static 'images/6photo.png' %}" alt=""></div>
+            </div>
+        </div>
+
+        <button class="nav-button next-button" id="nextButton_now">
+            <span class="arrow">&#9654;</span>
+        </button>
+    </div>
+</div>
+
+<!-- ===== ЖАНРЫ ===== -->
+<div class="container">
+    <div class="header-container">
+        <h2>Жанры ></h2>
+    </div>
+
+    <div class="carousel-container">
+        <button class="nav-button prev-button" id="prevButton_genre" disabled>
+            <span class="arrow">&#9664;</span>
+        </button>
+
+        <div class="carousel-viewport">
+            <div class="carousel-track" id="carouselTrack_genre">
+                <div class="movie-card"><img src="{% static 'images/1genre.png' %}"></div>
+                <div class="movie-card"><img src="{% static 'images/2genre.png' %}"></div>
+                <div class="movie-card"><img src="{% static 'images/3genre.png' %}"></div>
+                <div class="movie-card"><img src="{% static 'images/4genre.png' %}"></div>
+                <div class="movie-card"><img src="{% static 'images/5genre.png' %}"></div>
+            </div>
+        </div>
+
+        <button class="nav-button next-button" id="nextButton_genre">
+            <span class="arrow">&#9654;</span>
+        </button>
+    </div>
+</div>
+
+<!-- ===== СКОРО ===== -->
+<div class="container1">
+    <div class="header-container">
+        <h2>Скоро ></h2>
+    </div>
+
+    <div class="carousel-container">
+        <button class="nav-button prev-button" id="prevButton_soon" disabled>
+            <span class="arrow">&#9664;</span>
+        </button>
+
+        <div class="carousel-viewport">
+            <div class="carousel-track" id="carouselTrack_soon">
+                <div class="movie-card card-wide"><img src="{% static 'images/1movie.png' %}"></div>
+                <div class="movie-card card-wide"><img src="{% static 'images/2movie.png' %}"></div>
+                <div class="movie-card card-wide"><img src="{% static 'images/3movie.png' %}"></div>
+                <div class="movie-card card-wide"><img src="{% static 'images/4movie.png' %}"></div>
+                <div class="movie-card card-wide"><img src="{% static 'images/5movie.png' %}"></div>
+            </div>
+        </div>
+
+        <button class="nav-button next-button" id="nextButton_soon">
+            <span class="arrow">&#9654;</span>
+        </button>
+    </div>
+</div>
+
+<!-- ===== KIDS ===== -->
+<div class="container">
+    <div class="header-container">
+        <h2>KINOKIDS ></h2>
+    </div>
+
+    <div class="carousel-container">
+        <button class="nav-button prev-button" id="prevButton_kids" disabled>
+            <span class="arrow">&#9664;</span>
+        </button>
+
+        <div class="carousel-viewport">
+            <div class="carousel-track" id="carouselTrack_kids">
+                <div class="movie-card"><img src="{% static 'images/1kids.png' %}"></div>
+                <div class="movie-card"><img src="{% static 'images/2kids.png' %}"></div>
+                <div class="movie-card"><img src="{% static 'images/3kids.png' %}"></div>
+                <div class="movie-card"><img src="{% static 'images/4kids.png' %}"></div>
+                <div class="movie-card"><img src="{% static 'images/5kids.png' %}"></div>
+                <div class="movie-card"><img src="{% static 'images/6kids.png' %}"></div>
+            </div>
+        </div>
+
+        <button class="nav-button next-button" id="nextButton_kids">
+            <span class="arrow">&#9654;</span>
+        </button>
+    </div>
+</div>
+
+<footer class="site-footer">
+    <div class="footer-content-wrapper">
+        <div class="footer-column about-us">
+            <h3>О нас</h3>
+            <ul>
+                <li>О компании</li>
+                <li>Контакты</li>
+                <li>Новости</li>
+                <li>Пользовательское соглашение</li>
+                <li>Политика конфиденциальности</li>
+            </ul>
+        </div>
+
+        <div class="footer-column help">
+            <h3>Помощь</h3>
+            <ul>
+                <li>Сообщить об ошибке</li>
+                <li>F.A.Q.</li>
+            </ul>
+        </div>
+
+        <div class="footer-column social">
+            <h3>Социальные сети</h3>
+            <ul>
+                <li>Instagram</li>
+                <li>VK</li>
+                <li>Telegram</li>
+            </ul>
+        </div>
+
+        <div class="footer-column app-download">
+            <h3>Скачать приложение</h3>
+            <div class="app-buttons">
+                <a href="#" class="app-button">
+                    <img src="{% static 'images/footrer_icon.png' %}">
+                </a>
+                <a href="#" class="app-button">
+                    <img src="{% static 'images/footer_icon2.png' %}">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <hr class="footer-divider">
+        <p class="copyright">
+            © 2015 ООО "КиноТоо"
+        </p>
+    </div>
+</footer>
+
+<!-- было: script.js -->
+<script src="{% static 'script.js' %}"></script>
+
+</body>
+</html>

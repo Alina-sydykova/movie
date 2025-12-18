@@ -1,0 +1,292 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINOTOO</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arsenal+SC:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS из static -->
+    <link rel="stylesheet" href="{% static 'schedule.css' %}">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="header-left">
+        <div class="logo">
+            <img src="{% static 'images/icon1.png' %}" alt="icon" class="icon_img">
+            KINOTOO
+        </div>
+
+        <div class="search-box">
+            <!-- У тебя нет отдельного /search/ url, поэтому ведём на главную -->
+            <a class="search-icon" href="{% url 'home' %}">
+                <i class="fas fa-search"></i>
+            </a>
+        </div>
+    </div>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="{% url 'home' %}">Фильмы</a></li>
+            <li><a href="{% url 'series' %}">Сериалы</a></li>
+            <li><a href="{% url 'news' %}">Новости</a></li>
+            <li><a href="{% url 'calendar' %}" class="active-nav">Календарь</a></li>
+        </ul>
+    </nav>
+
+    <div class="header-right">
+        <!-- push.html у тебя пока не подключён url'ом -->
+       <a href="{% url 'push' %}"><i class="fas fa-bell icon"></i></a>
+
+        <a href="{% url 'profile' %}"><i class="fas fa-user-circle icon"></i></a>
+        <a href="{% url 'favorites' %}"><i class="fas fa-bookmark icon"></i></a>
+    </div>
+</header>
+
+
+<div class="premiere-schedule-container">
+    <h1 class="schedule-title">ГРАФИК ПРЕМЬЕР 2025</h1>
+
+    <div class="months-grid">
+        <div class="month-card">
+            <h2 class="month-name">Январь</h2>
+            <div class="weekdays-header">
+                <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+            </div>
+            <div class="dates-grid">
+                <span></span>
+                <span class="highlight">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span class="highlight">11</span><span>12</span>
+                <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                <span>20</span><span class="highlight">21</span><span class="highlight">22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+                <span>27</span><span>28</span><span class="highlight">29</span><span>30</span><span>31</span>
+            </div>
+        </div>
+
+        <div class="month-card">
+            <h2 class="month-name">Февраль</h2>
+            <div class="weekdays-header">
+                <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+            </div>
+            <div class="dates-grid">
+                <span></span>
+                <span class="highlight">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span class="highlight">11</span><span>12</span>
+                <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                <span>20</span><span class="highlight">21</span><span class="highlight">22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+                <span>27</span><span>28</span><span class="highlight">29</span><span>30</span>
+            </div>
+        </div>
+
+        <div class="month-card">
+            <h2 class="month-name">Март</h2>
+            <div class="weekdays-header">
+                <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+            </div>
+            <div class="dates-grid">
+                <span></span>
+                <span class="highlight">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span class="highlight">11</span><span>12</span>
+                <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                <span>20</span><span class="highlight">21</span><span class="highlight">22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+                <span>27</span><span>28</span><span class="highlight">29</span><span>30</span><span>31</span>
+            </div>
+        </div>
+
+        <div class="month-card">
+            <h2 class="month-name">Апрель</h2>
+            <div class="weekdays-header">
+                <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+            </div>
+            <div class="dates-grid">
+                <span></span>
+                <span class="highlight">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span class="highlight">11</span><span>12</span>
+                <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                <span>20</span><span class="highlight">21</span><span class="highlight">22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+                <span>27</span><span>28</span><span class="highlight">29</span><span>30</span>
+            </div>
+        </div>
+
+        <div class="month-card">
+            <h2 class="month-name">Май</h2>
+            <div class="weekdays-header">
+                <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+            </div>
+            <div class="dates-grid">
+                <span></span>
+                <span class="highlight">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span class="highlight">11</span><span>12</span>
+                <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                <span>20</span><span class="highlight">21</span><span class="highlight">22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+                <span>27</span><span>28</span><span class="highlight">29</span><span>30</span>
+            </div>
+        </div>
+
+        <div class="month-card">
+            <h2 class="month-name">Июнь</h2>
+            <div class="weekdays-header">
+                <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+            </div>
+            <div class="dates-grid">
+                <span></span>
+                <span class="highlight">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span class="highlight">11</span><span>12</span>
+                <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                <span>20</span><span class="highlight">21</span><span class="highlight">22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+                <span>27</span><span>28</span><span class="highlight">29</span><span>30</span>
+            </div>
+        </div>
+
+        <div class="month-card">
+            <h2 class="month-name">Июль</h2>
+            <div class="weekdays-header">
+                <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+            </div>
+            <div class="dates-grid">
+                <span></span>
+                <span class="highlight">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span class="highlight">11</span><span>12</span>
+                <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                <span>20</span><span class="highlight">21</span><span class="highlight">22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+                <span>27</span><span>28</span><span class="highlight">29</span><span>30</span>
+            </div>
+        </div>
+
+        <div class="month-card">
+            <h2 class="month-name">Август</h2>
+            <div class="weekdays-header">
+                <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+            </div>
+            <div class="dates-grid">
+                <span></span>
+                <span class="highlight">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span class="highlight">11</span><span>12</span>
+                <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                <span>20</span><span class="highlight">21</span><span class="highlight">22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+                <span>27</span><span>28</span><span class="highlight">29</span><span>30</span>
+            </div>
+        </div>
+
+        <div class="month-card">
+            <h2 class="month-name">Сентябрь</h2>
+            <div class="weekdays-header">
+                <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+            </div>
+            <div class="dates-grid">
+                <span></span>
+                <span class="highlight">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span class="highlight">11</span><span>12</span>
+                <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                <span>20</span><span class="highlight">21</span><span class="highlight">22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+                <span>27</span><span>28</span><span class="highlight">29</span><span>30</span>
+            </div>
+        </div>
+
+        <div class="month-card">
+            <h2 class="month-name">Октябрь</h2>
+            <div class="weekdays-header">
+                <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+            </div>
+            <div class="dates-grid">
+                <span></span>
+                <span class="highlight">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span class="highlight">11</span><span>12</span>
+                <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                <span>20</span><span class="highlight">21</span><span class="highlight">22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+                <span>27</span><span>28</span><span class="highlight">29</span><span>30</span>
+            </div>
+        </div>
+
+        <div class="month-card">
+            <h2 class="month-name">Ноябрь</h2>
+            <div class="weekdays-header">
+                <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+            </div>
+            <div class="dates-grid">
+                <span></span>
+                <span class="highlight">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span class="highlight">11</span><span>12</span>
+                <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                <span>20</span><span class="highlight">21</span><span class="highlight">22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+                <span>27</span><span>28</span><span class="highlight">29</span><span>30</span>
+            </div>
+        </div>
+
+        <div class="month-card">
+            <h2 class="month-name">Декабрь</h2>
+            <div class="weekdays-header">
+                <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+            </div>
+            <div class="dates-grid">
+                <span></span>
+                <span class="highlight">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span class="highlight">11</span><span>12</span>
+                <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                <span>20</span><span class="highlight">21</span><span class="highlight">22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+                <span>27</span><span>28</span><span class="highlight">29</span><span>30</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer class="site-footer">
+    <div class="footer-content-wrapper">
+        <div class="footer-column about-us">
+            <h3>О нас</h3>
+            <ul>
+                <li>О компании</li>
+                <li>Контакты</li>
+                <li>Новости</li>
+                <li>Пользовательское соглашение</li>
+                <li>Политика конфиденциальности</li>
+            </ul>
+        </div>
+
+        <div class="footer-column help">
+            <h3>Помощь</h3>
+            <ul>
+                <li>Сообщить об ошибке</li>
+                <li>F.A.Q.</li>
+            </ul>
+        </div>
+
+        <div class="footer-column social">
+            <h3>Социальные сети</h3>
+            <ul>
+                <li>Instagram</li>
+                <li>VK</li>
+                <li>Telegram</li>
+            </ul>
+        </div>
+
+        <div class="footer-column app-download">
+            <h3>Скачать приложение</h3>
+            <div class="app-buttons">
+                <a href="#" class="app-button">
+                    <img src="{% static 'images/footrer_icon.png' %}" alt="Google Play">
+                </a>
+                <a href="#" class="app-button">
+                    <img src="{% static 'images/footer_icon2.png' %}" alt="App Store">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <hr class="footer-divider">
+        <p class="copyright">
+            <span class="copyright-icon">©</span> 2015 ООО "КиноТоо"
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>
