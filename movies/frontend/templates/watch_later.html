@@ -1,6 +1,7 @@
-{% load static %}
+{% load static i18n %}
+{% get_current_language as CURRENT_LANGUAGE %}
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="{{ CURRENT_LANGUAGE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <link rel="stylesheet" href="{% static 'favourite.css' %}">
+    <link rel="stylesheet" href="{% static 'i18n.css' %}">
 </head>
 <body>
 
@@ -33,14 +35,15 @@
 
     <nav class="main-nav">
         <ul>
-            <li><a href="{% url 'home' %}">Фильмы</a></li>
-            <li><a href="{% url 'series' %}">Сериалы</a></li>
-            <li><a href="{% url 'news' %}">Новости</a></li>
-            <li><a href="{% url 'calendar' %}">Календарь</a></li>
+            <li><a href="{% url 'home' %}">{% trans "Фильмы" %}</a></li>
+            <li><a href="{% url 'series' %}">{% trans "Сериалы" %}</a></li>
+            <li><a href="{% url 'news' %}">{% trans "Новости" %}</a></li>
+            <li><a href="{% url 'calendar' %}">{% trans "Календарь" %}</a></li>
         </ul>
     </nav>
 
     <div class="header-right">
+        {% include 'partials/lang_switcher.html' %}
         <a href="{% url 'push' %}"><i class="fas fa-bell icon"></i></a>
         <a href="{% url 'profile' %}"><i class="fas fa-user-circle icon"></i></a>
         <a href="{% url 'favorites' %}"><i class="fas fa-bookmark icon"></i></a>
@@ -48,7 +51,7 @@
 </header>
 
 <main class="main-content">
-    <h1 class="page-title">Посмотрю позже</h1>
+    <h1 class="page-title">{% trans "Посмотрю позже" %}</h1>
 
     {% if entries %}
         <div class="list-carousel">
@@ -86,33 +89,33 @@
             </button>
         </div>
     {% else %}
-        <p>Список пока пуст.</p>
+        <p>{% trans "Список пока пуст." %}</p>
     {% endif %}
 </main>
 
 <footer class="site-footer">
     <div class="footer-content-wrapper">
         <div class="footer-column about-us">
-            <h3>О нас</h3>
+            <h3>{% trans "О нас" %}</h3>
             <ul>
-                <li>О компании</li>
-                <li>Контакты</li>
-                <li>Новости</li>
-                <li>Пользовательское соглашение</li>
-                <li>Политика конфиденциальности</li>
+                <li>{% trans "О компании" %}</li>
+                <li>{% trans "Контакты" %}</li>
+                <li>{% trans "Новости" %}</li>
+                <li>{% trans "Пользовательское соглашение" %}</li>
+                <li>{% trans "Политика конфиденциальности" %}</li>
             </ul>
         </div>
 
         <div class="footer-column help">
-            <h3>Помощь</h3>
+            <h3>{% trans "Помощь" %}</h3>
             <ul>
-                <li>Сообщить об ошибке</li>
+                <li>{% trans "Сообщить об ошибке" %}</li>
                 <li>F.A.Q.</li>
             </ul>
         </div>
 
         <div class="footer-column social">
-            <h3>Социальные сети</h3>
+            <h3>{% trans "Социальные сети" %}</h3>
             <ul>
                 <li>Instagram</li>
                 <li>VK</li>
@@ -121,7 +124,7 @@
         </div>
 
         <div class="footer-column app-download">
-            <h3>Скачать приложение</h3>
+            <h3>{% trans "Скачать приложение" %}</h3>
             <div class="app-buttons">
                 <a href="#" class="app-button">
                     <img src="{% static 'images/footrer_icon.png' %}" alt="Google Play">

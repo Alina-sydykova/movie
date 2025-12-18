@@ -14,6 +14,7 @@
 
     <!-- было: search.css -->
     <link rel="stylesheet" href="{% static 'search.css' %}">
+    <link rel="stylesheet" href="{% static 'i18n.css' %}">
 </head>
 <body>
     <form id="csrf-form" style="display:none;">
@@ -54,6 +55,7 @@
         </nav>
 
         <div class="header-right">
+            {% include 'partials/lang_switcher.html' %}
             <!-- у тебя тут уже было Django -->
             <a href="{% url 'push' %}"><i class="fas fa-bell icon"></i></a>
 

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <link rel="stylesheet" href="{% static 'watch.css' %}">
+    <link rel="stylesheet" href="{% static 'i18n.css' %}">
 
    
 </head>
@@ -39,6 +40,7 @@
     </nav>
 
     <div class="header-right">
+        {% include 'partials/lang_switcher.html' %}
         <a href="{% url 'push' %}"><i class="fas fa-bell icon"></i></a>
         <a href="{% url 'profile' %}"><i class="fas fa-user-circle icon"></i></a>
         <a href="{% url 'favorites' %}"><i class="fas fa-bookmark icon"></i></a>

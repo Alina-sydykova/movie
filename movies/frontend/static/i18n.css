@@ -1,0 +1,56 @@
+/* Language switcher (RU / EN / KG) */
+
+.lang-switcher {
+  display: flex;
+  align-items: center;
+}
+
+.lang-form {
+  display: flex;
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid rgba(179, 202, 255, 0.55);
+  border-radius: 999px;
+  background: rgba(20, 22, 30, 0.45);
+  backdrop-filter: blur(6px);
+}
+
+.lang-btn {
+  border: none;
+  background: transparent;
+  color: rgba(229, 236, 255, 0.95);
+  font: inherit;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.lang-btn:hover {
+  background: rgba(179, 202, 255, 0.18);
+}
+
+.lang-btn:active {
+  transform: translateY(1px);
+}
+
+.lang-btn.active {
+  background: rgba(179, 202, 255, 0.85);
+  color: #12141a;
+}
+
+@media (max-width: 768px) {
+  .lang-form {
+    gap: 4px;
+    padding: 3px;
+  }
+
+  .lang-btn {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+}
+

@@ -1,6 +1,7 @@
-{% load static %}
+{% load static i18n %}
+{% get_current_language as CURRENT_LANGUAGE %}
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="{{ CURRENT_LANGUAGE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
 
     <!-- было push.css -->
     <link rel="stylesheet" href="{% static 'push.css' %}">
+    <link rel="stylesheet" href="{% static 'i18n.css' %}">
 </head>
 <body>
 
@@ -32,14 +34,15 @@
 
     <nav class="main-nav">
         <ul>
-            <li><a href="{% url 'home' %}" class="active-nav">Фильмы</a></li>
-            <li><a href="{% url 'series' %}">Сериалы</a></li>
-            <li><a href="{% url 'news' %}">Новости</a></li>
-            <li><a href="{% url 'calendar' %}">Календарь</a></li>
+            <li><a href="{% url 'home' %}" class="active-nav">{% trans "Фильмы" %}</a></li>
+            <li><a href="{% url 'series' %}">{% trans "Сериалы" %}</a></li>
+            <li><a href="{% url 'news' %}">{% trans "Новости" %}</a></li>
+            <li><a href="{% url 'calendar' %}">{% trans "Календарь" %}</a></li>
         </ul>
     </nav>
 
     <div class="header-right">
+        {% include 'partials/lang_switcher.html' %}
         <!-- текущая страница -->
         <a href="{% url 'push' %}"><i class="fas fa-bell icon"></i></a>
         <a href="{% url 'profile' %}"><i class="fas fa-user-circle icon"></i></a>
@@ -49,7 +52,7 @@
 
 <div class="notifications-container">
     <main class="main-content">
-        <h1 class="page-title">Уведомления</h1>
+        <h1 class="page-title">{% trans "Уведомления" %}</h1>
 
         <div class="notification-card">
             <div class="card-media">

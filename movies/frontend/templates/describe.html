@@ -13,6 +13,7 @@
 
     <!-- CSS из static -->
     <link rel="stylesheet" href="{% static 'describe.css' %}">
+    <link rel="stylesheet" href="{% static 'i18n.css' %}">
 </head>
 <body>
 
@@ -41,6 +42,7 @@
 
     <div class="header-right">
         <!-- push.html нет в urls -> оставляем # -->
+        {% include 'partials/lang_switcher.html' %}
         <a href="{% url 'push' %}"><i class="fas fa-bell icon"></i></a>
 
         <a href="{% url 'profile' %}"><i class="fas fa-user-circle icon"></i></a>

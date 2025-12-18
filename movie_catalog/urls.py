@@ -12,6 +12,9 @@ urlpatterns = [
 
     # Логин/логаут Django
     path("accounts/", include("django.contrib.auth.urls")),
+
+    # Переключение языка (set_language)
+    path("i18n/", include("django.conf.urls.i18n")),
     
 
 
