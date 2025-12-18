@@ -12,8 +12,6 @@
 
     <link rel="stylesheet" href="{% static 'watch.css' %}">
     <link rel="stylesheet" href="{% static 'i18n.css' %}">
-
-   
 </head>
 <body>
 
@@ -56,10 +54,24 @@
 
     <section class="player-section">
         <h2 class="section-title">1 СЕЗОН 1 СЕРИЯ</h2>
+
         <div class="video-player">
-            <video id="episodePlayer" class="video-element" controls
-                   data-default-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">
-                <source id="episodeSource" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+            <video id="episodePlayer" class="video-element" controls crossorigin="anonymous"
+                   data-default-src="/media/videos/videoplayback.mp4">
+                <source id="episodeSource" src="/media/videos/videoplayback.mp4" type="video/mp4">
+
+                <!-- AI subtitles (VTT) -->
+                <track src="/media/subtitles/videoplayback.vtt"
+                       kind="subtitles"
+                       srclang="en"
+                       label="EN"
+                       default>
+
+                <track src="/media/subtitles/videoplayback_ky.vtt"
+                       kind="subtitles"
+                       srclang="ky"
+                       label="KG">
+
                 Ваш браузер не поддерживает видео.
             </video>
         </div>
@@ -70,78 +82,78 @@
         <div class="season-block">
             <h3 class="season-title">1 СЕЗОН</h3>
             <div class="episodes-grid">
-                <button class="episode-btn active" data-season="1" data-episode="1" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">1 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="2" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">2 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="3" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">3 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="4" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">4 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="5" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">5 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="6" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">6 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="7" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">7 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="8" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">8 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="9" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">9 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="10" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">10 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="11" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">11 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="12" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">12 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="13" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">13 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="14" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">14 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="15" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">15 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="16" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">16 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="17" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">17 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="18" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">18 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="19" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">19 СЕРИЯ</button>
-                <button class="episode-btn" data-season="1" data-episode="20" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">20 СЕРИЯ</button>
+                <button class="episode-btn active" data-season="1" data-episode="1" data-src="/media/videos/videoplayback.mp4">1 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="2" data-src="/media/videos/videoplayback.mp4">2 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="3" data-src="/media/videos/videoplayback.mp4">3 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="4" data-src="/media/videos/videoplayback.mp4">4 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="5" data-src="/media/videos/videoplayback.mp4">5 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="6" data-src="/media/videos/videoplayback.mp4">6 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="7" data-src="/media/videos/videoplayback.mp4">7 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="8" data-src="/media/videos/videoplayback.mp4">8 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="9" data-src="/media/videos/videoplayback.mp4">9 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="10" data-src="/media/videos/videoplayback.mp4">10 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="11" data-src="/media/videos/videoplayback.mp4">11 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="12" data-src="/media/videos/videoplayback.mp4">12 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="13" data-src="/media/videos/videoplayback.mp4">13 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="14" data-src="/media/videos/videoplayback.mp4">14 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="15" data-src="/media/videos/videoplayback.mp4">15 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="16" data-src="/media/videos/videoplayback.mp4">16 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="17" data-src="/media/videos/videoplayback.mp4">17 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="18" data-src="/media/videos/videoplayback.mp4">18 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="19" data-src="/media/videos/videoplayback.mp4">19 СЕРИЯ</button>
+                <button class="episode-btn" data-season="1" data-episode="20" data-src="/media/videos/videoplayback.mp4">20 СЕРИЯ</button>
             </div>
         </div>
 
         <div class="season-block">
             <h3 class="season-title">2 СЕЗОН</h3>
             <div class="episodes-grid">
-                <button class="episode-btn active" data-season="2" data-episode="1" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">1 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="2" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">2 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="3">3 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="4">4 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="5">5 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="6">6 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="7">7 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="8">8 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="9">9 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="10">10 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="11">11 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="12">12 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="13">13 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="14">14 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="15">15 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="16">16 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="17">17 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="18">18 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="19">19 СЕРИЯ</button>
-                <button class="episode-btn" data-season="2" data-episode="20" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">20 СЕРИЯ</button>
+                <button class="episode-btn active" data-season="2" data-episode="1" data-src="/media/videos/videoplayback.mp4">1 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="2" data-src="/media/videos/videoplayback.mp4">2 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="3" data-src="/media/videos/videoplayback.mp4">3 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="4" data-src="/media/videos/videoplayback.mp4">4 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="5" data-src="/media/videos/videoplayback.mp4">5 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="6" data-src="/media/videos/videoplayback.mp4">6 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="7" data-src="/media/videos/videoplayback.mp4">7 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="8" data-src="/media/videos/videoplayback.mp4">8 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="9" data-src="/media/videos/videoplayback.mp4">9 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="10" data-src="/media/videos/videoplayback.mp4">10 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="11" data-src="/media/videos/videoplayback.mp4">11 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="12" data-src="/media/videos/videoplayback.mp4">12 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="13" data-src="/media/videos/videoplayback.mp4">13 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="14" data-src="/media/videos/videoplayback.mp4">14 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="15" data-src="/media/videos/videoplayback.mp4">15 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="16" data-src="/media/videos/videoplayback.mp4">16 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="17" data-src="/media/videos/videoplayback.mp4">17 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="18" data-src="/media/videos/videoplayback.mp4">18 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="19" data-src="/media/videos/videoplayback.mp4">19 СЕРИЯ</button>
+                <button class="episode-btn" data-season="2" data-episode="20" data-src="/media/videos/videoplayback.mp4">20 СЕРИЯ</button>
             </div>
         </div>
 
         <div class="season-block">
             <h3 class="season-title">3 СЕЗОН</h3>
             <div class="episodes-grid">
-                <button class="episode-btn active" data-season="3" data-episode="1" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">1 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="2" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">2 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="3">3 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="4">4 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="5">5 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="6">6 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="7">7 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="8">8 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="9">9 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="10">10 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="11">11 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="12">12 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="13">13 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="14">14 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="15">15 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="16">16 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="17">17 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="18">18 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="19">19 СЕРИЯ</button>
-                <button class="episode-btn" data-season="3" data-episode="20" data-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">20 СЕРИЯ</button>
+                <button class="episode-btn active" data-season="3" data-episode="1" data-src="/media/videos/videoplayback.mp4">1 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="2" data-src="/media/videos/videoplayback.mp4">2 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="3" data-src="/media/videos/videoplayback.mp4">3 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="4" data-src="/media/videos/videoplayback.mp4">4 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="5" data-src="/media/videos/videoplayback.mp4">5 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="6" data-src="/media/videos/videoplayback.mp4">6 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="7" data-src="/media/videos/videoplayback.mp4">7 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="8" data-src="/media/videos/videoplayback.mp4">8 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="9" data-src="/media/videos/videoplayback.mp4">9 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="10" data-src="/media/videos/videoplayback.mp4">10 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="11" data-src="/media/videos/videoplayback.mp4">11 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="12" data-src="/media/videos/videoplayback.mp4">12 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="13" data-src="/media/videos/videoplayback.mp4">13 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="14" data-src="/media/videos/videoplayback.mp4">14 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="15" data-src="/media/videos/videoplayback.mp4">15 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="16" data-src="/media/videos/videoplayback.mp4">16 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="17" data-src="/media/videos/videoplayback.mp4">17 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="18" data-src="/media/videos/videoplayback.mp4">18 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="19" data-src="/media/videos/videoplayback.mp4">19 СЕРИЯ</button>
+                <button class="episode-btn" data-season="3" data-episode="20" data-src="/media/videos/videoplayback.mp4">20 СЕРИЯ</button>
             </div>
         </div>
 

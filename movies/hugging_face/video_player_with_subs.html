@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Видеоплеер с многоязычными субтитрами</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f0f0f0;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #4cc9f0, #4361ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #a0a0c0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .player-section {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        @media (min-width: 992px) {
+            .player-section {
+                flex-direction: row;
+            }
+        }
+        
+        .video-container {
+            flex: 3;
+            background-color: #0d1117;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        #mainVideo {
+            width: 100%;
+            height: auto;
+            display: block;
+            outline: none;
+        }
+        
+        .controls-container {
+            flex: 1;
+            background-color: rgba(13, 17, 23, 0.8);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .controls-title {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #4cc9f0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(76, 201, 240, 0.3);
+        }
+        
+        .subtitles-control {
+            margin-bottom: 25px;
+        }
+        
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            background-color: #2d3748;
+            color: #e2e8f0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: #4a5568;
+            transform: translateY(-2px);
+        }
+        
+        .btn.active {
+            background-color: #4361ee;
+            color: white;
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .info-panel {
+            background-color: rgba(13, 17, 23, 0.9);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            border-left: 4px solid #4361ee;
+        }
+        
+        .info-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #4cc9f0;
+        }
+        
+        .info-list {
+            list-style-type: none;
+        }
+        
+        .info-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .highlight {
+            color: #4cc9f0;
+            font-weight: bold;
+        }
+        
+        .file-structure {
+            background-color: #1a202c;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a0a0c0;
+            font-size: 0.9rem;
+        }
+        
+        .instruction {
+            background-color: rgba(67, 97, 238, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #4361ee;
+        }
+        
+        .note {
+            background-color: rgba(240, 173, 78, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #f0ad4e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Видеоплеер с многоязычными субтитрами</h1>
+            <p class="subtitle">Демонстрация работы "мягких" (external) субтитров. Субтитры загружаются отдельными файлами и могут быть включены/выключены во время просмотра.</p>
+        </header>
+        
+        <div class="instruction">
+            <p><strong>Как пользоваться:</strong> Нажмите кнопку воспроизведения, затем используйте кнопки справа для управления субтитрами. Вы можете выбрать язык субтитров или отключить их полностью.</p>
+        </div>
+        
+        <div class="player-section">
+            <div class="video-container">
+                <!-- 
+                    ОСНОВНОЙ ВИДЕОПЛЕЕР
+                    Важно: атрибут 'crossorigin="anonymous"' может потребоваться 
+                    если видео и субтитры загружаются с другого домена
+                -->
+                <video id="mainVideo" controls crossorigin="anonymous" preload="metadata" poster="https://via.placeholder.com/1280x720/1a1a2e/4361ee?text=Preview+Placeholder">
+                    <!-- 
+                        Основной видеофайл 
+                        ЗАМЕНИТЕ 'путь_к_вашему_видео.mp4' на реальный URL вашего видео
+                    -->
+                    <source src="videoplayback.mp4" type="video/mp4">
+                    Ваш браузер не поддерживает тег video.
+                    
+                    <!-- 
+                        ДОРОЖКИ СУБТИТРОВ
+                        Важно: атрибут 'srclang' должен содержать код языка (ru, en, ky и т.д.)
+                        Атрибут 'label' - это название языка, отображаемое пользователю
+                    -->
+                    <!-- Субтитры на кыргызском (сгенерированы вашим скриптом) -->
+                    <track kind="subtitles" srclang="ky" label="Кыргызча"  src="videoplayback_ky.vtt">
+                    
+                    <!-- Субтитры на английском (оригинал или перевод) -->
+                    <track id="enTrack" kind="subtitles" srclang="en" label="English" src="videoplayback.vtt" default>
+                    
+                    <!-- 
+                        Для русского языка (если нужен) раскомментируйте:
+                        <track id="ruTrack" kind="subtitles" srclang="ru" label="Русский" src="путь_к_вашим_субтитрам/videoplayback_ru.srt">
+                    -->
+                </video>
+            </div>
+            
+            <div class="controls-container">
+                <h3 class="controls-title">Управление субтитрами</h3>
+                
+                <div class="subtitles-control">
+                    <p>Выберите язык субтитров:</p>
+                    <div class="btn-group">
+                        <button class="btn active" id="btnNone" data-lang="none">Выкл</button>
+                        <button class="btn" id="btnKy" data-lang="ky">Кыргызча</button>
+                        <button class="btn" id="btnEn" data-lang="en">English</button>
+                        <!-- Для русского языка раскомментируйте:
+                        <button class="btn" id="btnRu" data-lang="ru">Русский</button>
+                        -->
+                    </div>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Примечание для разработчиков:</strong> Кнопки автоматически синхронизируются с текущим состоянием видеоплеера. При изменении языка через стандартное меню плеера (иконка "СС") кнопки также обновятся.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-panel">
+            <h3 class="info-title">Информация для интеграции</h3>
+            <ul class="info-list">
+                <li><span class="highlight">Формат субтитров:</span> Стандартный WebVTT или SRT (ваш скрипт создает SRT, который прекрасно работает)</li>
+                <li><span class="highlight">Кодировка файлов:</span> UTF-8 (обязательно!)</li>
+                <li><span class="highlight">Структура файлов:</span> Видео и субтитры - отдельные файлы</li>
+                <li><span class="highlight">Требования к хостингу:</span> Файлы субтитров должны быть доступны по HTTP/HTTPS</li>
+                <li><span class="highlight">CORS:</span> Если файлы на другом домене, нужны правильные CORS-заголовки</li>
+            </ul>
+            
+            <div class="file-structure">
+                <!-- Пример структуры файлов, которую создает ваш скрипт -->
+                <pre>
+/папка_с_видео/
+├── videoplayback.mp4          (основное видео)
+├── videoplayback.srt          (субтитры на английском)
+└── videoplayback_ky.srt       (субтитры на кыргызском, созданы вашим скриптом)
+                </pre>
+            </div>
+            
+            <div class="instruction">
+                <p><strong>Что нужно заменить в коде:</strong></p>
+                <ol>
+                    <li>В теге <code>&lt;source src="..."&gt;</code> укажите правильный путь к видеофайлу</li>
+                    <li>В тегах <code>&lt;track src="..."&gt;</code> укажите правильные пути к файлам субтитров</li>
+                    <li>При необходимости добавьте дорожки для дополнительных языков (см. закомментированные примеры)</li>
+                </ol>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Компонент видеоплеера с субтитрами | Создано для интеграции в основной проект</p>
+            <p>Формат субтитров: SRT (генерируется скриптом транскрибации и перевода)</p>
+        </footer>
+    </div>
+
+    <script>
+        // JavaScript для управления субтитрами через кнопки
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('mainVideo');
+            const btnNone = document.getElementById('btnNone');
+            const btnKy = document.getElementById('btnKy');
+            const btnEn = document.getElementById('btnEn');
+            
+            // Получаем все дорожки субтитров
+            const tracks = video.textTracks;
+            
+            // Функция для переключения активной кнопки
+            function setActiveButton(activeBtn) {
+                // Снимаем активный класс со всех кнопок
+                [btnNone, btnKy, btnEn].forEach(btn => btn.classList.remove('active'));
+                // Добавляем активный класс на выбранную кнопку
+                activeBtn.classList.add('active');
+            }
+            
+            // Функция для включения субтитров на определенном языке
+            function enableSubtitles(lang) {
+                // Выключаем все дорожки субтитров
+                for (let i = 0; i < tracks.length; i++) {
+                    tracks[i].mode = 'disabled';
+                }
+                
+                // Если выбран не "none", включаем нужную дорожку
+                if (lang !== 'none') {
+                    const track = document.querySelector(`track[srclang="${lang}"]`);
+                    if (track && track.track) {
+                        track.track.mode = 'showing';
+                    }
+                }
+                
+                // Обновляем активную кнопку
+                const activeBtn = document.getElementById(`btn${lang === 'none' ? 'None' : lang === 'ky' ? 'Ky' : 'En'}`);
+                setActiveButton(activeBtn);
+            }
+            
+            // Обработчики для кнопок
+            btnNone.addEventListener('click', function() {
+                enableSubtitles('none');
+            });
+            
+            btnKy.addEventListener('click', function() {
+                enableSubtitles('ky');
+            });
+            
+            btnEn.addEventListener('click', function() {
+                enableSubtitles('en');
+            });
+            
+            // Следим за изменениями в стандартном меню субтитров плеера
+            video.addEventListener('loadstart', function() {
+                // При загрузке видео проверяем, какие субтитры активны по умолчанию
+                setTimeout(() => {
+                    for (let i = 0; i < tracks.length; i++) {
+                        if (tracks[i].mode === 'showing') {
+                            const lang = tracks[i].language;
+                            const activeBtn = document.querySelector(`button[data-lang="${lang}"]`);
+                            if (activeBtn) setActiveButton(activeBtn);
+                            break;
+                        }
+                    }
+                }, 500);
+            });
+            
+            // Инициализация: устанавливаем начальное состояние
+            // По умолчанию субтитры отключены (или английские, если в track стоит default)
+            setTimeout(() => {
+                let subtitlesEnabled = false;
+                for (let i = 0; i < tracks.length; i++) {
+                    if (tracks[i].mode === 'showing') {
+                        subtitlesEnabled = true;
+                        const lang = tracks[i].language;
+                        const activeBtn = document.querySelector(`button[data-lang="${lang}"]`);
+                        if (activeBtn) setActiveButton(activeBtn);
+                        break;
+                    }
+                }
+                
+                if (!subtitlesEnabled) {
+                    setActiveButton(btnNone);
+                }
+            }, 1000);
+            
+            // Дополнительно: логируем события для отладки
+            video.addEventListener('cuechange', function() {
+                const activeTrack = Array.from(tracks).find(track => track.mode === 'showing');
+                if (activeTrack) {
+                    console.log('Активные субтитры:', activeTrack.language);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
