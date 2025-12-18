@@ -124,8 +124,8 @@
         <div class="movie-grid">
 
             <!-- Дальше карточки НЕ ТРОГАЮ по дизайну, только пути картинок -->
-
-            <div class="movie-card">
+            <a href="{% url 'watch' %}" class="movie-card-link">
+                <div class="movie-card">
                 <div class="movie-poster">
                     <img class="poster-image" src="{% static 'images/serial1.jpg' %}" alt="Зверополис 2">
                     <div class="poster-overlay">
@@ -138,7 +138,10 @@
                 </div>
             </div>
 
-            <div class="movie-card">
+            </a>
+
+            <a href="{% url 'watch' %}" class="movie-card-link">
+                <div class="movie-card">
                 <div class="movie-poster">
                     <img class="poster-image" src="{% static 'images/serial2.jpg' %}" alt="Иллюзионист Обмана">
                     <div class="poster-overlay">
@@ -150,8 +153,10 @@
                     <h3 class="movie-title">Ход королевы</h3>
                 </div>
             </div>
+            </a>
 
-            <div class="movie-card">
+            <a href="{% url 'watch' %}" class="movie-card-link">
+                <div class="movie-card">
                 <div class="movie-poster">
                     <img class="poster-image" src="{% static 'images/serial3.jpg' %}" alt="Айдан">
                     <div class="poster-overlay">
@@ -162,8 +167,10 @@
                     <h3 class="movie-title">Люцифер</h3>
                 </div>
             </div>
+            </a>
 
-            <div class="movie-card">
+            <a href="{% url 'watch' %}" class="movie-card-link">
+                <div class="movie-card">
                 <div class="movie-poster">
                     <img class="poster-image" src="{% static 'images/serial4.jpg' %}" alt="Дракула">
                     <div class="poster-overlay">
@@ -174,8 +181,10 @@
                     <h3 class="movie-title">Энн с двумя н</h3>
                 </div>
             </div>
+            </a>
 
-            <div class="movie-card">
+            <a href="{% url 'watch' %}" class="movie-card-link">
+                <div class="movie-card">
                 <div class="movie-poster">
                     <img class="poster-image" src="{% static 'images/serial5.jpg' %}" alt="Планета Смерти">
                     <div class="poster-overlay">
@@ -186,8 +195,10 @@
                     <h3 class="movie-title">Время путешествий</h3>
                 </div>
             </div>
+            </a>
 
-            <div class="movie-card">
+            <a href="{% url 'watch' %}" class="movie-card-link">
+                <div class="movie-card">
                 <div class="movie-poster">
                     <img class="poster-image" src="{% static 'images/serial6.jpg' %}" alt="Зверополис 2">
                     <div class="poster-overlay">
@@ -199,8 +210,10 @@
                     <h3 class="movie-title">Монстры на каникулах</h3>
                 </div>
             </div>
+            </a>
 
-            <div class="movie-card">
+            <a href="{% url 'watch' %}" class="movie-card-link">
+                <div class="movie-card">
                 <div class="movie-poster">
                     <img class="poster-image" src="{% static 'images/serial7.jpg' %}" alt="Иллюзионист Обмана">
                     <div class="poster-overlay">
@@ -212,8 +225,10 @@
                     <h3 class="movie-title">Семейка Крудс</h3>
                 </div>
             </div>
+            </a>
 
-            <div class="movie-card">
+            <a href="{% url 'watch' %}" class="movie-card-link">
+                <div class="movie-card">
                 <div class="movie-poster">
                     <img class="poster-image" src="{% static 'images/serial8.jpg' %}" alt="Айдан">
                     <div class="poster-overlay">
@@ -224,8 +239,10 @@
                     <h3 class="movie-title">Гравити фолз</h3>
                 </div>
             </div>
+            </a>
 
-            <div class="movie-card">
+            <a href="{% url 'watch' %}" class="movie-card-link">
+                <div class="movie-card">
                 <div class="movie-poster">
                     <img class="poster-image" src="{% static 'images/serial9.jpg' %}" alt="Дракула">
                     <div class="poster-overlay">
@@ -236,8 +253,10 @@
                     <h3 class="movie-title">Клинок,рассекающий демонов</h3>
                 </div>
             </div>
+            </a>
 
-            <div class="movie-card">
+            <a href="{% url 'watch' %}" class="movie-card-link">
+                <div class="movie-card">
                 <div class="movie-poster">
                     <img class="poster-image" src="{% static 'images/планета.png' %}" alt="Планета Смерти">
                     <div class="poster-overlay">
@@ -248,6 +267,7 @@
                     <h3 class="movie-title">Планета Смерти</h3>
                 </div>
             </div>
+            </a>
 
             <!-- Остальные повторяющиеся карточки — аналогично: только src -> {% static 'images/...' %} -->
             <!-- Я не меняю контент/дубли, потому что ты просила не трогать дизайн -->
